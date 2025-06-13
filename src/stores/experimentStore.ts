@@ -6,13 +6,8 @@ export const useExperimentStore = defineStore(
   () => {
     const name = ref("人类免疫缺陷病毒（HIV）的筛查")
     const EnglishName = ref("Screening for Human Immunodeficiency Virus (HIV)")
-
     const experimentInfo = shallowRef<any>(defaultExperimentInfo)
-    // function saveExperimentInfo(val: any) {
-    //   experimentInfo.value = val
-    // }
-
-     const activeTabIndex = ref(0)
+    const activeTabIndex = ref(0)
     const isSimulation = ref<number | null>(null)
     function getStepList(arr: any) {
       const empty = [] as { name: string; desc: string }[]
@@ -29,13 +24,9 @@ export const useExperimentStore = defineStore(
     }
     const getExperiment = computed(() => {
       if (isSimulation.value === null) return []
-      const arr = []
-      arr[0] = getStepList(experimentInfo.value["实验模拟一"])
-      arr[1] = getStepList(experimentInfo.value["实验模拟二"])
-      arr[2] = getStepList(experimentInfo.value["实验模拟三"])
-      arr[3] = getStepList(experimentInfo.value["实验模拟四"])
-      arr[4] = getStepList(experimentInfo.value["实验模拟五"])
-      return arr[isSimulation.value]
+      const simulationKeys = ["实验模拟一", "实验模拟二", "实验模拟三", "实验模拟四", "实验模拟五"]
+      const arr = simulationKeys.map((key) => getStepList(experimentInfo.value[key]))
+      return arr[isSimulation.value] || []
     })
     return {
       name,
@@ -43,11 +34,14 @@ export const useExperimentStore = defineStore(
       activeTabIndex,
       isSimulation,
       experimentInfo,
-      // saveExperimentInfo,
       getExperiment,
     }
   },
-  { persist: true },
+  {
+    persist: {
+      pick: ["activeTabIndex", "isSimulation"],
+    },
+  },
 )
 export const experimentScore = defineStore("experimentScore", () => {
   const tipMessage = ref("")
