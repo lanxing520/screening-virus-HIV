@@ -1,9 +1,7 @@
 <script setup lang="ts">
-
-
 const routerList = [
-  { name: '首页', route: '/' },
-  { name: '实验', route: '/experiment-page' },
+  { name: "首页", route: "/" },
+  { name: "实验", route: "/experiment-page" },
 ]
 const router = useRouter()
 const goTo = (route: string) => {

@@ -3,7 +3,6 @@ import { scene } from "../common/initScene"
 
 // 创建 Tube
 export function createTube(path: Vector3[], radius = 0.01) {
-
   const tube = MeshBuilder.CreateTube(
     "tube",
     {

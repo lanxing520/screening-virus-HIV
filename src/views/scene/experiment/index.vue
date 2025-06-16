@@ -10,12 +10,12 @@
   </ExperimentLayout>
 </template>
 <script setup lang="ts">
-import ExperimentLayout from '@/components/ExperimentLayout.vue'
-import ExperimentIntroduction from './ExperimentIntroduction.vue'
-import ExperimentalPrinciple from './ExperimentalPrinciple.vue'
-import Simulation from './simulation/index.vue'
-import { fps } from './simulation/methods/common/config.ts'
-import { useExperimentStore } from '@/stores/experimentStore'
+import ExperimentLayout from "@/components/ExperimentLayout.vue"
+import ExperimentIntroduction from "./ExperimentIntroduction.vue"
+import ExperimentalPrinciple from "./ExperimentalPrinciple.vue"
+import Simulation from "./simulation/index.vue"
+import { fps } from "./simulation/methods/common/config.ts"
+import { useExperimentStore } from "@/stores/experimentStore"
 
 const store = useExperimentStore()
 </script>

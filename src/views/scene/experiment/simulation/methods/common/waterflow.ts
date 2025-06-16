@@ -11,7 +11,7 @@ import {
 } from "@babylonjs/core"
 import { scene } from "./initScene"
 import type { NumberArray } from "./interface"
-export function createVerticalWaterStream(emitterPosition: NumberArray, duration=1) {
+export function createVerticalWaterStream(emitterPosition: NumberArray, duration = 1) {
   // 创建粒子系统用于模拟水流
   const waterParticles = new ParticleSystem("waterStream", 2000, scene as Scene)
 

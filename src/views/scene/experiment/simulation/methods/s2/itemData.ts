@@ -78,7 +78,7 @@ export const itemData2 = {
   dcxq: {
     name: "待测血清",
     position: [origin.x, origin.y, origin.z + 0.2],
-    scaling:10
+    scaling: 10,
   },
   lxg: {
     name: "离心管",

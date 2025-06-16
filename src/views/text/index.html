@@ -49,7 +49,7 @@
   <body>
     <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
     <script>
-      var canvas = document.getElementById('renderCanvas')
+      var canvas = document.getElementById("renderCanvas")
 
       var startRenderLoop = function (engine, canvas) {
         engine.runRenderLoop(function () {
@@ -78,7 +78,7 @@
           const cameraMax = 1000
           const createCamera = () => {
             const camera = new BABYLON.ArcRotateCamera(
-              'ArcRotateCamera',
+              "ArcRotateCamera",
               3.06,
               1.14,
               2.96,
@@ -90,12 +90,12 @@
             camera.minZ = cameraMin
             camera.maxZ = cameraMax
             camera.wheelPrecision = 50
-            camera.inputs.removeByType('ArcRotateCameraKeyboardMoveInput')
+            camera.inputs.removeByType("ArcRotateCameraKeyboardMoveInput")
             return camera
           }
           const camera = createCamera()
           scene.activeCamera = camera
-          FluidSimulationDemoBase.AddDemo('Glass', () => new FluidSimulationDemoGlass(scene))
+          FluidSimulationDemoBase.AddDemo("Glass", () => new FluidSimulationDemoGlass(scene))
           FluidSimulationDemoBase.StartDemo(0)
           scene.onDisposeObservable.add(() => {
             FluidSimulationDemoBase.Dispose()
@@ -103,13 +103,13 @@
           return scene
         }
       }
-      const assetsDir = 'https://popov72.github.io/FluidRendering/src/assets/'
+      const assetsDir = "https://popov72.github.io/FluidRendering/src/assets/"
       async function LoadLiLGUI() {
         return BABYLON.Tools.LoadScriptAsync(
-          'https://cdn.jsdelivr.net/npm/lil-gui@0.17.0/dist/lil-gui.umd.min.js',
+          "https://cdn.jsdelivr.net/npm/lil-gui@0.17.0/dist/lil-gui.umd.min.js",
         )
       }
-      const domElementName = 'fluidRendererGUI'
+      const domElementName = "fluidRendererGUI"
       /**
        * A simple GUI to easily interact with the fluid renderer
        */
@@ -135,7 +135,7 @@
           }
           this._visible = v
           if (this._gui) {
-            this._gui.domElement.style.display = v ? '' : 'none'
+            this._gui.domElement.style.display = v ? "" : "none"
           }
         }
         /**
@@ -172,7 +172,7 @@
             switch (kbInfo.type) {
               case BABYLON.KeyboardEventTypes.KEYUP:
                 switch (kbInfo.event.key) {
-                  case 'F8': {
+                  case "F8": {
                     this.visible = !this._visible
                     break
                   }
@@ -183,11 +183,11 @@
         }
         async _initialize() {
           this.dispose()
-          if (typeof lil === 'undefined') {
+          if (typeof lil === "undefined") {
             await LoadLiLGUI()
           }
-          this._gui = new lil.GUI({ title: 'Fluid Rendering' })
-          this._gui.domElement.style.marginTop = '60px'
+          this._gui = new lil.GUI({ title: "Fluid Rendering" })
+          this._gui.domElement.style.marginTop = "60px"
           this._gui.domElement.id = domElementName
           this._setupKeyboard()
           if (this._showGeneralMenu) {
@@ -233,11 +233,11 @@
             return
           }
           const params = {
-            enable: this._parameterRead('enable'),
+            enable: this._parameterRead("enable"),
           }
-          const general = this._gui.addFolder('General')
-          general.$title.style.fontWeight = 'bold'
-          this._addCheckbox(general, params, 'enable', 'Enable fluid renderer')
+          const general = this._gui.addFolder("General")
+          general.$title.style.fontWeight = "bold"
+          this._addCheckbox(general, params, "enable", "Enable fluid renderer")
           general.open()
         }
         _makeMenuTargetRenderers() {
@@ -245,48 +245,48 @@
             return
           }
           const params = {
-            targets_index: this._parameterRead('targets_index'),
-            targets_generateDiffuseTexture: this._parameterRead('targets_generateDiffuseTexture'),
-            targets_fluidColor: this._parameterRead('targets_fluidColor'),
-            targets_density: this._parameterRead('targets_density'),
-            targets_refractionStrength: this._parameterRead('targets_refractionStrength'),
-            targets_fresnelClamp: this._parameterRead('targets_fresnelClamp'),
-            targets_specularPower: this._parameterRead('targets_specularPower'),
-            targets_minimumThickness: this._parameterRead('targets_minimumThickness'),
-            targets_debug: this._parameterRead('targets_debug'),
-            targets_debugFeature: this._parameterRead('targets_debugFeature'),
-            targets_enableBlurDepth: this._parameterRead('targets_enableBlurDepth'),
-            targets_blurDepthSizeDivisor: this._parameterRead('targets_blurDepthSizeDivisor'),
-            targets_blurDepthFilterSize: this._parameterRead('targets_blurDepthFilterSize'),
-            targets_blurDepthNumIterations: this._parameterRead('targets_blurDepthNumIterations'),
-            targets_blurDepthMaxFilterSize: this._parameterRead('targets_blurDepthMaxFilterSize'),
-            targets_blurDepthDepthScale: this._parameterRead('targets_blurDepthDepthScale'),
-            targets_enableBlurThickness: this._parameterRead('targets_enableBlurThickness'),
+            targets_index: this._parameterRead("targets_index"),
+            targets_generateDiffuseTexture: this._parameterRead("targets_generateDiffuseTexture"),
+            targets_fluidColor: this._parameterRead("targets_fluidColor"),
+            targets_density: this._parameterRead("targets_density"),
+            targets_refractionStrength: this._parameterRead("targets_refractionStrength"),
+            targets_fresnelClamp: this._parameterRead("targets_fresnelClamp"),
+            targets_specularPower: this._parameterRead("targets_specularPower"),
+            targets_minimumThickness: this._parameterRead("targets_minimumThickness"),
+            targets_debug: this._parameterRead("targets_debug"),
+            targets_debugFeature: this._parameterRead("targets_debugFeature"),
+            targets_enableBlurDepth: this._parameterRead("targets_enableBlurDepth"),
+            targets_blurDepthSizeDivisor: this._parameterRead("targets_blurDepthSizeDivisor"),
+            targets_blurDepthFilterSize: this._parameterRead("targets_blurDepthFilterSize"),
+            targets_blurDepthNumIterations: this._parameterRead("targets_blurDepthNumIterations"),
+            targets_blurDepthMaxFilterSize: this._parameterRead("targets_blurDepthMaxFilterSize"),
+            targets_blurDepthDepthScale: this._parameterRead("targets_blurDepthDepthScale"),
+            targets_enableBlurThickness: this._parameterRead("targets_enableBlurThickness"),
             targets_blurThicknessSizeDivisor: this._parameterRead(
-              'targets_blurThicknessSizeDivisor',
+              "targets_blurThicknessSizeDivisor",
             ),
-            targets_blurThicknessFilterSize: this._parameterRead('targets_blurThicknessFilterSize'),
+            targets_blurThicknessFilterSize: this._parameterRead("targets_blurThicknessFilterSize"),
             targets_blurThicknessNumIterations: this._parameterRead(
-              'targets_blurThicknessNumIterations',
+              "targets_blurThicknessNumIterations",
             ),
-            targets_depthMapSize: this._parameterRead('targets_depthMapSize'),
-            targets_thicknessMapSize: this._parameterRead('targets_thicknessMapSize'),
-            targets_diffuseMapSize: this._parameterRead('targets_diffuseMapSize'),
-            targets_useVelocity: this._parameterRead('targets_useVelocity'),
-            targets_useFixedThickness: this._parameterRead('targets_useFixedThickness'),
+            targets_depthMapSize: this._parameterRead("targets_depthMapSize"),
+            targets_thicknessMapSize: this._parameterRead("targets_thicknessMapSize"),
+            targets_diffuseMapSize: this._parameterRead("targets_diffuseMapSize"),
+            targets_useVelocity: this._parameterRead("targets_useVelocity"),
+            targets_useFixedThickness: this._parameterRead("targets_useFixedThickness"),
           }
-          const targetRenderers = this._gui.addFolder('Target renderers')
-          targetRenderers.$title.style.fontWeight = 'bold'
+          const targetRenderers = this._gui.addFolder("Target renderers")
+          targetRenderers.$title.style.fontWeight = "bold"
           const targetList = []
           if (this._scene.fluidRenderer) {
             for (let i = 0; i < this._scene.fluidRenderer.targetRenderers.length; ++i) {
               targetList.push(i)
             }
           }
-          this._addList(targetRenderers, params, 'targets_index', 'Index', targetList)
+          this._addList(targetRenderers, params, "targets_index", "Index", targetList)
           this._targetRenderersGUIElements.push(
-            this._addList(targetRenderers, params, 'targets_depthMapSize', 'Depth map size', [
-              'Screen size',
+            this._addList(targetRenderers, params, "targets_depthMapSize", "Depth map size", [
+              "Screen size",
               256,
               512,
               1024,
@@ -298,14 +298,14 @@
             this._addList(
               targetRenderers,
               params,
-              'targets_thicknessMapSize',
-              'Thickness map size',
-              ['Screen size', 64, 128, 256, 512, 1024, 2048],
+              "targets_thicknessMapSize",
+              "Thickness map size",
+              ["Screen size", 64, 128, 256, 512, 1024, 2048],
             ),
           )
           this._targetRenderersGUIElements.push(
-            this._addList(targetRenderers, params, 'targets_diffuseMapSize', 'Diffuse map size', [
-              'Screen size',
+            this._addList(targetRenderers, params, "targets_diffuseMapSize", "Diffuse map size", [
+              "Screen size",
               256,
               512,
               1024,
@@ -317,8 +317,8 @@
             this._addSlider(
               targetRenderers,
               params,
-              'targets_minimumThickness',
-              'Minimum thickness',
+              "targets_minimumThickness",
+              "Minimum thickness",
               0,
               3,
               0.001,
@@ -328,35 +328,35 @@
             this._addCheckbox(
               targetRenderers,
               params,
-              'targets_useFixedThickness',
-              'Use fixed thickness',
+              "targets_useFixedThickness",
+              "Use fixed thickness",
             ),
           )
           this._targetRenderersGUIElements.push(
-            this._addCheckbox(targetRenderers, params, 'targets_useVelocity', 'Use velocity'),
+            this._addCheckbox(targetRenderers, params, "targets_useVelocity", "Use velocity"),
           )
-          const menuColor = targetRenderers.addFolder('Color')
-          menuColor.$title.style.fontStyle = 'italic'
+          const menuColor = targetRenderers.addFolder("Color")
+          menuColor.$title.style.fontStyle = "italic"
           this._targetRenderersGUIElements.push(
             this._addCheckbox(
               menuColor,
               params,
-              'targets_generateDiffuseTexture',
-              'Generate diffuse texture',
+              "targets_generateDiffuseTexture",
+              "Generate diffuse texture",
             ),
           )
           this._targetRenderersGUIElements.push(
-            this._addColor(menuColor, params, 'targets_fluidColor', 'Fluid color'),
+            this._addColor(menuColor, params, "targets_fluidColor", "Fluid color"),
           )
           this._targetRenderersGUIElements.push(
-            this._addSlider(menuColor, params, 'targets_density', 'Density', 0, 20, 0.01),
+            this._addSlider(menuColor, params, "targets_density", "Density", 0, 20, 0.01),
           )
           this._targetRenderersGUIElements.push(
             this._addSlider(
               menuColor,
               params,
-              'targets_refractionStrength',
-              'Refraction strength',
+              "targets_refractionStrength",
+              "Refraction strength",
               0,
               0.3,
               0.005,
@@ -366,8 +366,8 @@
             this._addSlider(
               menuColor,
               params,
-              'targets_fresnelClamp',
-              'Fresnel clamp',
+              "targets_fresnelClamp",
+              "Fresnel clamp",
               0,
               1.0,
               0.005,
@@ -377,24 +377,24 @@
             this._addSlider(
               menuColor,
               params,
-              'targets_specularPower',
-              'Specular power',
+              "targets_specularPower",
+              "Specular power",
               1,
               5000,
               5,
             ),
           )
-          const menuBlurDepth = targetRenderers.addFolder('Blur Depth')
-          menuBlurDepth.$title.style.fontStyle = 'italic'
+          const menuBlurDepth = targetRenderers.addFolder("Blur Depth")
+          menuBlurDepth.$title.style.fontStyle = "italic"
           this._targetRenderersGUIElements.push(
-            this._addCheckbox(menuBlurDepth, params, 'targets_enableBlurDepth', 'Enable'),
+            this._addCheckbox(menuBlurDepth, params, "targets_enableBlurDepth", "Enable"),
           )
           this._targetRenderersGUIElements.push(
             this._addSlider(
               menuBlurDepth,
               params,
-              'targets_blurDepthSizeDivisor',
-              'Size divisor',
+              "targets_blurDepthSizeDivisor",
+              "Size divisor",
               1,
               10,
               1,
@@ -404,8 +404,8 @@
             this._addSlider(
               menuBlurDepth,
               params,
-              'targets_blurDepthFilterSize',
-              'Filter size',
+              "targets_blurDepthFilterSize",
+              "Filter size",
               1,
               20,
               1,
@@ -415,8 +415,8 @@
             this._addSlider(
               menuBlurDepth,
               params,
-              'targets_blurDepthNumIterations',
-              'Num iterations',
+              "targets_blurDepthNumIterations",
+              "Num iterations",
               1,
               10,
               1,
@@ -426,8 +426,8 @@
             this._addSlider(
               menuBlurDepth,
               params,
-              'targets_blurDepthMaxFilterSize',
-              'Max filter size',
+              "targets_blurDepthMaxFilterSize",
+              "Max filter size",
               1,
               100,
               1,
@@ -437,24 +437,24 @@
             this._addSlider(
               menuBlurDepth,
               params,
-              'targets_blurDepthDepthScale',
-              'Depth scale',
+              "targets_blurDepthDepthScale",
+              "Depth scale",
               0,
               100,
               0.01,
             ),
           )
-          const menuBlurThickness = targetRenderers.addFolder('Blur Thickness')
-          menuBlurThickness.$title.style.fontStyle = 'italic'
+          const menuBlurThickness = targetRenderers.addFolder("Blur Thickness")
+          menuBlurThickness.$title.style.fontStyle = "italic"
           this._targetRenderersGUIElements.push(
-            this._addCheckbox(menuBlurThickness, params, 'targets_enableBlurThickness', 'Enable'),
+            this._addCheckbox(menuBlurThickness, params, "targets_enableBlurThickness", "Enable"),
           )
           this._targetRenderersGUIElements.push(
             this._addSlider(
               menuBlurThickness,
               params,
-              'targets_blurThicknessSizeDivisor',
-              'Size divisor',
+              "targets_blurThicknessSizeDivisor",
+              "Size divisor",
               1,
               10,
               1,
@@ -464,8 +464,8 @@
             this._addSlider(
               menuBlurThickness,
               params,
-              'targets_blurThicknessFilterSize',
-              'Filter size',
+              "targets_blurThicknessFilterSize",
+              "Filter size",
               1,
               20,
               1,
@@ -475,24 +475,24 @@
             this._addSlider(
               menuBlurThickness,
               params,
-              'targets_blurThicknessNumIterations',
-              'Num iterations',
+              "targets_blurThicknessNumIterations",
+              "Num iterations",
               1,
               10,
               1,
             ),
           )
-          const menuDebug = targetRenderers.addFolder('Debug')
-          menuDebug.$title.style.fontStyle = 'italic'
+          const menuDebug = targetRenderers.addFolder("Debug")
+          menuDebug.$title.style.fontStyle = "italic"
           this._targetRenderersGUIElements.push(
-            this._addCheckbox(menuDebug, params, 'targets_debug', 'Enable'),
+            this._addCheckbox(menuDebug, params, "targets_debug", "Enable"),
           )
           this._targetRenderersGUIElements.push(
             this._addList(
               menuDebug,
               params,
-              'targets_debugFeature',
-              'Feature',
+              "targets_debugFeature",
+              "Feature",
               Object.keys(BABYLON.FluidRenderingDebug).filter((k) => isNaN(Number(k))),
             ),
           )
@@ -503,25 +503,25 @@
             return
           }
           const params = {
-            objects_index: this._parameterRead('objects_index'),
-            objects_particleSize: this._parameterRead('objects_particleSize'),
-            objects_particleThicknessAlpha: this._parameterRead('objects_particleThicknessAlpha'),
+            objects_index: this._parameterRead("objects_index"),
+            objects_particleSize: this._parameterRead("objects_particleSize"),
+            objects_particleThicknessAlpha: this._parameterRead("objects_particleThicknessAlpha"),
           }
-          const renderObjects = this._gui.addFolder('Render objects')
-          renderObjects.$title.style.fontWeight = 'bold'
+          const renderObjects = this._gui.addFolder("Render objects")
+          renderObjects.$title.style.fontWeight = "bold"
           const objectList = []
           if (this._scene.fluidRenderer) {
             for (let i = 0; i < this._scene.fluidRenderer.renderObjects.length; ++i) {
               objectList.push(i)
             }
           }
-          this._addList(renderObjects, params, 'objects_index', 'Index', objectList)
+          this._addList(renderObjects, params, "objects_index", "Index", objectList)
           this._renderObjectsGUIElements.push(
             this._addSlider(
               renderObjects,
               params,
-              'objects_particleSize',
-              'Particle size',
+              "objects_particleSize",
+              "Particle size",
               0,
               2,
               0.001,
@@ -531,8 +531,8 @@
             this._addSlider(
               renderObjects,
               params,
-              'objects_particleThicknessAlpha',
-              'Particle alpha',
+              "objects_particleThicknessAlpha",
+              "Particle alpha",
               0,
               1,
               0.001,
@@ -540,31 +540,31 @@
           )
         }
         _readValue(obj, name) {
-          const parts = name.split('_')
+          const parts = name.split("_")
           for (let i = 0; i < parts.length; ++i) {
             const part = parts[i]
             obj = obj[parts[i]]
             if (obj instanceof BABYLON.Color3) {
               obj = obj.toHexString()
             }
-            if (part === 'debugFeature') {
+            if (part === "debugFeature") {
               obj = BABYLON.FluidRenderingDebug[obj]
             }
-            if (part.endsWith('MapSize') && obj === null) {
-              obj = 'Screen size'
+            if (part.endsWith("MapSize") && obj === null) {
+              obj = "Screen size"
             }
           }
           return obj
         }
         _setValue(obj, name, value) {
-          const parts = name.split('_')
+          const parts = name.split("_")
           for (let i = 0; i < parts.length - 1; ++i) {
             obj = obj[parts[i]]
-            if (parts[i].endsWith('MapSize') && value === 'Screen size') {
+            if (parts[i].endsWith("MapSize") && value === "Screen size") {
               value = null
             }
           }
-          if (parts[parts.length - 1].endsWith('MapSize') && value === 'Screen size') {
+          if (parts[parts.length - 1].endsWith("MapSize") && value === "Screen size") {
             value = null
           }
           obj[parts[parts.length - 1]] = value
@@ -572,34 +572,34 @@
         _parameterRead(name) {
           const fluidRenderer = this._scene.fluidRenderer
           switch (name) {
-            case 'enable':
+            case "enable":
               return !!this._scene.fluidRenderer
           }
-          if (name.startsWith('targets_')) {
+          if (name.startsWith("targets_")) {
             name = name.substring(8)
-            if (name === 'index') {
+            if (name === "index") {
               return this._targetRendererIndex
             } else {
               return fluidRenderer
                 ? this._readValue(fluidRenderer.targetRenderers[this._targetRendererIndex], name)
-                : ''
+                : ""
             }
           }
-          if (name.startsWith('objects_')) {
+          if (name.startsWith("objects_")) {
             name = name.substring(8)
-            if (name === 'index') {
+            if (name === "index") {
               return this._renderObjectIndex
             } else {
               return fluidRenderer
                 ? this._readValue(fluidRenderer.renderObjects[this._renderObjectIndex].object, name)
-                : ''
+                : ""
             }
           }
         }
         _fillValues(listGUIElements, obj) {
           for (let i = 0; i < listGUIElements.length; ++i) {
             const elem = listGUIElements[i]
-            const property = elem.property.split('_')[1]
+            const property = elem.property.split("_")[1]
             elem.object[elem.property] = this._readValue(obj, property)
             elem.updateDisplay()
           }
@@ -623,7 +623,7 @@
         _parameterChanged(name, value) {
           const fluidRenderer = this._scene.fluidRenderer
           switch (name) {
-            case 'enable':
+            case "enable":
               if (value) {
                 this._scene.enableFluidRenderer()
                 this._targetRendererIndex = 0
@@ -634,7 +634,7 @@
                 this._initialize()
               }
               return
-            case 'targets_fluidColor':
+            case "targets_fluidColor":
               if (
                 fluidRenderer &&
                 fluidRenderer.targetRenderers.length > this._targetRendererIndex
@@ -644,7 +644,7 @@
                 )
               }
               return
-            case 'targets_debugFeature': {
+            case "targets_debugFeature": {
               const typedDebugFeature = value
               const val = BABYLON.FluidRenderingDebug[typedDebugFeature]
               if (
@@ -656,9 +656,9 @@
               return
             }
           }
-          if (name.startsWith('targets_')) {
+          if (name.startsWith("targets_")) {
             name = name.substring(8)
-            if (name === 'index') {
+            if (name === "index") {
               this._targetRendererIndex = value || 0
               if (fluidRenderer) {
                 this._fillValues(
@@ -682,9 +682,9 @@
               }
             }
           }
-          if (name.startsWith('objects_')) {
+          if (name.startsWith("objects_")) {
             name = name.substring(8)
-            if (name === 'index') {
+            if (name === "index") {
               this._renderObjectIndex = value || 0
               if (fluidRenderer) {
                 this._fillValues(
@@ -710,14 +710,14 @@
           }
         }
       }
-      const envNames = ['Environment', 'Country', 'Parking', 'Night', 'Canyon', 'Studio']
+      const envNames = ["Environment", "Country", "Parking", "Night", "Canyon", "Studio"]
       const envFile = [
-        'environment.env',
-        'country.env',
-        'parking.env',
-        'night.env',
-        'Runyon_Canyon_A_2k_cube_specular.env',
-        'Studio_Softbox_2Umbrellas_cube_specular.env',
+        "environment.env",
+        "country.env",
+        "parking.env",
+        "night.env",
+        "Runyon_Canyon_A_2k_cube_specular.env",
+        "Studio_Softbox_2Umbrellas_cube_specular.env",
       ]
       class FluidSimulationDemoBase {
         _scene
@@ -768,7 +768,7 @@
           this._shapeCollisionRestitution = 0.999
           this._collisionObjectPromises = []
           this._collisionObjects = []
-          this._environmentFile = 'Environment'
+          this._environmentFile = "Environment"
           this._fluidSimGUIElements = []
           this._noFluidSimulation = noFluidSimulation
           const particleRadius = 0.02
@@ -818,7 +818,7 @@
         _setEnvironment() {
           const idx = envNames.indexOf(this._environmentFile)
           this._scene.environmentTexture = BABYLON.CubeTexture.CreateFromPrefilteredData(
-            'https://playground.babylonjs.com/textures/' + envFile[idx],
+            "https://playground.babylonjs.com/textures/" + envFile[idx],
             this._scene,
           )
           this._scene.createDefaultSkybox(this._scene.environmentTexture)
@@ -848,13 +848,13 @@
               }
               if (
                 this._fluidRenderObject &&
-                this._fluidRenderObject.object.vertexBuffers['position']
+                this._fluidRenderObject.object.vertexBuffers["position"]
               ) {
-                this._fluidRenderObject.object.vertexBuffers['position'].updateDirectly(
+                this._fluidRenderObject.object.vertexBuffers["position"].updateDirectly(
                   this._fluidSim.positions,
                   0,
                 )
-                this._fluidRenderObject.object.vertexBuffers['velocity'].updateDirectly(
+                this._fluidRenderObject.object.vertexBuffers["velocity"].updateDirectly(
                   this._fluidSim.velocities,
                   0,
                 )
@@ -1105,9 +1105,9 @@
               this._particleGenerator.positions,
               this._particleGenerator.velocities,
             )
-            this._fluidRenderObject.object.vertexBuffers['position']?.dispose()
-            this._fluidRenderObject.object.vertexBuffers['velocity']?.dispose()
-            this._fluidRenderObject.object.vertexBuffers['position'] = new BABYLON.VertexBuffer(
+            this._fluidRenderObject.object.vertexBuffers["position"]?.dispose()
+            this._fluidRenderObject.object.vertexBuffers["velocity"]?.dispose()
+            this._fluidRenderObject.object.vertexBuffers["position"] = new BABYLON.VertexBuffer(
               this._engine,
               this._fluidSim.positions,
               BABYLON.VertexBuffer.PositionKind,
@@ -1116,10 +1116,10 @@
               3,
               true,
             )
-            this._fluidRenderObject.object.vertexBuffers['velocity'] = new BABYLON.VertexBuffer(
+            this._fluidRenderObject.object.vertexBuffers["velocity"] = new BABYLON.VertexBuffer(
               this._engine,
               this._fluidSim.velocities,
-              'velocity',
+              "velocity",
               true,
               false,
               3,
@@ -1137,12 +1137,12 @@
           }
         }
         _makeGUI() {
-          this._gui = new lil.GUI({ title: 'Demo' })
-          this._gui.domElement.style.marginBottom = '40px'
-          this._gui.domElement.style.right = '20px'
-          this._gui.domElement.style.bottom = '0px'
-          this._gui.domElement.style.top = 'initial'
-          this._gui.domElement.id = 'simGUI'
+          this._gui = new lil.GUI({ title: "Demo" })
+          this._gui.domElement.style.marginBottom = "40px"
+          this._gui.domElement.style.right = "20px"
+          this._gui.domElement.style.bottom = "0px"
+          this._gui.domElement.style.top = "initial"
+          this._gui.domElement.id = "simGUI"
           const params = {
             demo: FluidSimulationDemoBase._DemoList[FluidSimulationDemoBase._CurrentDemoIndex].name,
             environment: this._environmentFile,
@@ -1162,8 +1162,8 @@
             demoList.push(demo.name)
           }
           this._gui
-            .add(params, 'demo', demoList)
-            .name('Name')
+            .add(params, "demo", demoList)
+            .name("Name")
             .onChange((value) => {
               for (let i = 0; i < FluidSimulationDemoBase._DemoList.length; ++i) {
                 if (FluidSimulationDemoBase._DemoList[i].name === value) {
@@ -1173,111 +1173,111 @@
               }
             })
           this._gui
-            .add(params, 'environment', envNames)
-            .name('Environment')
+            .add(params, "environment", envNames)
+            .name("Environment")
             .onChange((value) => {
               this._environmentFile = value
               this._setEnvironment()
             })
           this._makeGUIMainMenu()
           if (this._fluidSim && this._particleGenerator) {
-            const menuFluidSim = this._gui.addFolder('Fluid Simulator')
-            menuFluidSim.$title.style.fontWeight = 'bold'
+            const menuFluidSim = this._gui.addFolder("Fluid Simulator")
+            menuFluidSim.$title.style.fontWeight = "bold"
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'numParticles', 0, 40000, 88)
-                .name('Num particles')
+                .add(params, "numParticles", 0, 40000, 88)
+                .name("Num particles")
                 .onChange((value) => {
                   this._numParticles = value
                   this._generateParticles(false)
                 }),
               this,
-              '_numParticles',
+              "_numParticles",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'smoothingRadius', 0, 2, 0.001)
-                .name('Smoothing radius')
+                .add(params, "smoothingRadius", 0, 2, 0.001)
+                .name("Smoothing radius")
                 .onChange((value) => {
                   this._fluidSim.smoothingRadius = value || 0.04
                   this._particleGenerator.particleRadius = this._fluidSim.smoothingRadius / 2
                 }),
               this._fluidSim,
-              'smoothingRadius',
+              "smoothingRadius",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'densityReference', 0, 50000, 100)
-                .name('Density reference')
+                .add(params, "densityReference", 0, 50000, 100)
+                .name("Density reference")
                 .onChange((value) => {
                   this._fluidSim.densityReference = value
                 }),
               this._fluidSim,
-              'densityReference',
+              "densityReference",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'pressureConstant', 0, 100, 1)
-                .name('Pressure constant')
+                .add(params, "pressureConstant", 0, 100, 1)
+                .name("Pressure constant")
                 .onChange((value) => {
                   this._fluidSim.pressureConstant = value
                 }),
               this._fluidSim,
-              'pressureConstant',
+              "pressureConstant",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'viscosity', 0, 0.1, 0.001)
-                .name('Viscosity')
+                .add(params, "viscosity", 0, 0.1, 0.001)
+                .name("Viscosity")
                 .onChange((value) => {
                   this._fluidSim.viscosity = value
                 }),
               this._fluidSim,
-              'viscosity',
+              "viscosity",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'maxVelocity', 0, 20, 1)
-                .name('Max velocity')
+                .add(params, "maxVelocity", 0, 20, 1)
+                .name("Max velocity")
                 .onChange((value) => {
                   this._fluidSim.maxVelocity = value
                 }),
               this._fluidSim,
-              'maxVelocity',
+              "maxVelocity",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'maxAcceleration', 0, 100000, 10)
-                .name('Max acceleration')
+                .add(params, "maxAcceleration", 0, 100000, 10)
+                .name("Max acceleration")
                 .onChange((value) => {
                   this._fluidSim.maxAcceleration = value
                 }),
               this._fluidSim,
-              'maxAcceleration',
+              "maxAcceleration",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'minTimeStep', 0, 0.01, 0.00001)
-                .name('Min time step')
+                .add(params, "minTimeStep", 0, 0.01, 0.00001)
+                .name("Min time step")
                 .onChange((value) => {
                   this._fluidSim.minTimeStep = value
                 }),
               this._fluidSim,
-              'minTimeStep',
+              "minTimeStep",
             ])
             this._fluidSimGUIElements.push([
               menuFluidSim
-                .add(params, 'shapeCollisionRestitution', 0, 1, 0.001)
-                .name('Collision restitution')
+                .add(params, "shapeCollisionRestitution", 0, 1, 0.001)
+                .name("Collision restitution")
                 .onChange((value) => {
                   this._shapeCollisionRestitution = value
                 }),
               this,
-              '_shapeCollisionRestitution',
+              "_shapeCollisionRestitution",
             ])
             menuFluidSim
-              .add(params, 'paused')
-              .name('Pause')
+              .add(params, "paused")
+              .name("Pause")
               .onChange((value) => {
                 this._onPaused(value)
               })
@@ -1355,7 +1355,7 @@
       // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       // -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       // Table from YouniqueĪdeaStudio (https://sketchfab.com/3d-models/simple-round-table-obj-6083c7dd80034ed5a6425a5fe7bcdf9a)
-      const tableScene = assetsDir + 'scenes/simple_round_table.glb'
+      const tableScene = assetsDir + "scenes/simple_round_table.glb"
       class FluidSimulationDemoGlass extends FluidSimulationDemoBase {
         _boxMesh
         _boxMaterial
@@ -1366,7 +1366,7 @@
         _sceneRenderObserver
         constructor(scene) {
           super(scene)
-          this._environmentFile = 'Country'
+          this._environmentFile = "Country"
           this._sceneRenderObserver = null
           this._boxMesh = null
           this._boxMaterial = null
@@ -1443,13 +1443,13 @@
           this._particleGenerator.position.y = 0.8
           this._particleGenerator.position.z = -0.1
           // Create materials
-          this._boxMaterial = new BABYLON.PBRMaterial('BoxMeshMat', this._scene)
+          this._boxMaterial = new BABYLON.PBRMaterial("BoxMeshMat", this._scene)
           this._boxMaterial.metallic = 0.3
           this._boxMaterial.roughness = 0
           this._boxMaterial.alpha = 0.2
           this._boxMaterial.backFaceCulling = false
           this._boxMesh.material = this._boxMaterial
-          this._cylMesh.material = this._boxMaterial.clone('cloned')
+          this._cylMesh.material = this._boxMaterial.clone("cloned")
           this._cylMesh.material.alpha = 1
           this._footMesh.material = this._cylMesh.material
           this._sceneRenderObserver = this._scene.onBeforeRenderObservable.add(() => {
@@ -1459,15 +1459,15 @@
             this._footMesh.position.addInPlace(this._footMeshOfst)
           })
           super._run()
-          await BABYLON.SceneLoader.AppendAsync('', tableScene, this._scene)
-          const table = this._scene.getMeshByName('Object_3')
+          await BABYLON.SceneLoader.AppendAsync("", tableScene, this._scene)
+          const table = this._scene.getMeshByName("Object_3")
           table.scaling.setAll(6)
           table.position.set(-2.3, -2, -5.54)
         }
         dispose() {
           super.dispose()
           this._scene.onBeforeRenderObservable.remove(this._sceneRenderObserver)
-          this._scene.getMeshByName('__root__')?.dispose(false, true)
+          this._scene.getMeshByName("__root__")?.dispose(false, true)
           this._boxMesh?.dispose()
           this._boxMaterial?.dispose()
           this._cylMesh?.material?.dispose()
@@ -1482,10 +1482,10 @@
             boxOpacity: this._boxMaterial.alpha,
           }
           const mainMenu = this._gui
-          mainMenu.add(params, 'restart').name('Restart')
+          mainMenu.add(params, "restart").name("Restart")
           mainMenu
-            .add(params, 'boxOpacity', 0, 1, 0.01)
-            .name('Glass opacity')
+            .add(params, "boxOpacity", 0, 1, 0.01)
+            .name("Glass opacity")
             .onChange((value) => {
               this._boxMaterial.alpha = value
             })
@@ -1798,13 +1798,13 @@
               `https://popov72.github.io/FluidRendering/src/assets/particles/${fileName}.txt`,
             )
           ).text()
-          const lines = data.replace('\r', '').split('\n')
+          const lines = data.replace("\r", "").split("\n")
           const particlePos = []
           const particleVel = []
           let numParticles = 0
           for (let i = 1; i < lines.length; ++i) {
             const line = lines[i]
-            const vals = line.split(',')
+            const vals = line.split(",")
             if (line.charAt(0) === '"' || vals.length < 4) {
               continue
             }
@@ -1981,13 +1981,13 @@
       }
       // Textures from https://freepbr.com/materials/sulphuric-rock/
       const rockBaseColor =
-        'https://popov72.github.io/FluidRendering/src/assets/materials/sulphuric-rock_albedo.png'
+        "https://popov72.github.io/FluidRendering/src/assets/materials/sulphuric-rock_albedo.png"
       const rockRoughness =
-        'https://popov72.github.io/FluidRendering/src/assets/materials/sulphuric-rock_roughness.png'
+        "https://popov72.github.io/FluidRendering/src/assets/materials/sulphuric-rock_roughness.png"
       const rockNormal =
-        'https://popov72.github.io/FluidRendering/src/assets/materials/sulphuric-rock_normal-ogl.png'
+        "https://popov72.github.io/FluidRendering/src/assets/materials/sulphuric-rock_normal-ogl.png"
       const marbleBaseColor =
-        'https://popov72.github.io/FluidRendering/src/assets/materials/Marble08_1K_BaseColor.png'
+        "https://popov72.github.io/FluidRendering/src/assets/materials/Marble08_1K_BaseColor.png"
       const eps = 0.0001
       const eps1 = new BABYLON.Vector3(eps, -eps, -eps)
       const eps2 = new BABYLON.Vector3(-eps, -eps, eps)
@@ -2000,7 +2000,7 @@
       class SDFHelper {
         static CreateBox(scene, shape, extents) {
           const box = BABYLON.MeshBuilder.CreateBox(
-            'box',
+            "box",
             {
               width: extents.x * 2,
               height: extents.y * 2,
@@ -2008,21 +2008,21 @@
             },
             scene,
           )
-          const material = new BABYLON.PBRMaterial('boxMat', scene)
+          const material = new BABYLON.PBRMaterial("boxMat", scene)
           material.metallic = 0
           material.roughness = 0.9
-          material.albedoTexture = new BABYLON.Texture('textures/wood.jpg', scene)
+          material.albedoTexture = new BABYLON.Texture("textures/wood.jpg", scene)
           material.cullBackFaces = true
           box.material = material
           return Promise.resolve(box)
         }
         static CreateSphere(scene, shape, s) {
           const sphere = BABYLON.MeshBuilder.CreateSphere(
-            'sphere',
+            "sphere",
             { diameter: s * 2, segments: 16 },
             scene,
           )
-          const material = new BABYLON.PBRMaterial('sphereMat', scene)
+          const material = new BABYLON.PBRMaterial("sphereMat", scene)
           material.metallic = 1
           material.roughness = 0.05
           material.albedoTexture = new BABYLON.Texture(marbleBaseColor, scene)
@@ -2033,11 +2033,11 @@
         static CreateCutHollowSphere(scene, shape, radius, planeDist, thickness, segments) {
           thickness = thickness / radius
           const sphere = BABYLON.MeshBuilder.CreateSphere(
-            'sphere',
+            "sphere",
             { diameter: radius * 2, segments },
             scene,
           )
-          const plane = BABYLON.MeshBuilder.CreatePlane('plane', { size: radius * 2 }, scene)
+          const plane = BABYLON.MeshBuilder.CreatePlane("plane", { size: radius * 2 }, scene)
           plane.rotation.y = Math.PI / 2
           plane.position.x = planeDist
           const csg1 = BABYLON.CSG.FromMesh(sphere)
@@ -2045,7 +2045,7 @@
           sphere.dispose()
           plane.dispose()
           csg1.subtractInPlace(csgp)
-          const mesh = csg1.toMesh('sppl')
+          const mesh = csg1.toMesh("sppl")
           mesh.computeWorldMatrix(true)
           mesh.refreshBoundingInfo()
           mesh.scaling.setAll(1 - thickness)
@@ -2053,10 +2053,10 @@
           const csg2 = BABYLON.CSG.FromMesh(mesh)
           mesh.dispose()
           csg1.subtractInPlace(csg2)
-          const meshFinal = csg1.toMesh('cutHollowSphere')
+          const meshFinal = csg1.toMesh("cutHollowSphere")
           meshFinal.rotation.z = Math.PI / 2
           meshFinal.bakeCurrentTransformIntoVertices()
-          const material = new BABYLON.PBRMaterial('cutHollowSphereMat', scene)
+          const material = new BABYLON.PBRMaterial("cutHollowSphereMat", scene)
           material.metallic = 1
           material.roughness = 0.05
           material.albedoTexture = new BABYLON.Texture(marbleBaseColor, scene)
@@ -2066,11 +2066,11 @@
         }
         static CreateVerticalCylinder(scene, shape, r, h, segments) {
           const cylinder = BABYLON.MeshBuilder.CreateCylinder(
-            'cylinder',
+            "cylinder",
             { diameter: r * 2, height: h, tessellation: segments },
             scene,
           )
-          const material = new BABYLON.PBRMaterial('cylinderMat', scene)
+          const material = new BABYLON.PBRMaterial("cylinderMat", scene)
           material.metallic = 1
           material.roughness = 0.05
           material.albedoTexture = new BABYLON.Texture(marbleBaseColor, scene)
@@ -2080,8 +2080,8 @@
         }
         static CreateTerrain(scene, shape, size) {
           const ground = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
-            'terrain',
-            'textures/heightMap.png',
+            "terrain",
+            "textures/heightMap.png",
             {
               width: size,
               height: size,
@@ -2091,7 +2091,7 @@
             },
             scene,
           )
-          const mat = new BABYLON.PBRMaterial('mat', scene)
+          const mat = new BABYLON.PBRMaterial("mat", scene)
           mat.metallicTexture = new BABYLON.Texture(rockRoughness, scene)
           mat.albedoTexture = new BABYLON.Texture(rockBaseColor, scene)
           mat.bumpTexture = new BABYLON.Texture(rockNormal, scene)
@@ -2103,12 +2103,12 @@
           return Promise.resolve(ground)
         }
         static _ParseSDFData(textData) {
-          const lines = textData.replace('\r', '').split('\n')
-          const dimLine = lines[0].split(' ')
+          const lines = textData.replace("\r", "").split("\n")
+          const dimLine = lines[0].split(" ")
           const dimX = parseFloat(dimLine[0])
           const dimY = parseFloat(dimLine[1])
           const dimZ = parseFloat(dimLine[2])
-          const originLine = lines[1].split(' ')
+          const originLine = lines[1].split(" ")
           const origin = new BABYLON.Vector3(
             parseFloat(originLine[0]),
             parseFloat(originLine[1]),
@@ -2135,9 +2135,9 @@
         static CreateMesh(scene, shape, meshFilename, sdfFilename, createNormals) {
           return new Promise((resolve) => {
             const promises = [
-              BABYLON.SceneLoader.ImportMeshAsync('', assetsDir + 'scenes/', meshFilename, scene),
+              BABYLON.SceneLoader.ImportMeshAsync("", assetsDir + "scenes/", meshFilename, scene),
               new Promise((resolve) => {
-                fetch(assetsDir + 'sdf/' + sdfFilename).then((response) => {
+                fetch(assetsDir + "sdf/" + sdfFilename).then((response) => {
                   response.text().then((text) => {
                     shape.params.push(SDFHelper._ParseSDFData(text))
                     resolve(void 0)
@@ -2149,7 +2149,7 @@
               const meshes = results[0]
               const mesh = meshes.meshes[0]
               if (!mesh.material) {
-                const material = new BABYLON.PBRMaterial('meshMat', scene)
+                const material = new BABYLON.PBRMaterial("meshMat", scene)
                 material.metallic = 1
                 material.roughness = 0.05
                 material.albedoTexture = new BABYLON.Texture(rockBaseColor, scene)
@@ -2274,7 +2274,7 @@
             return createDefaultEngine()
           } catch (e) {
             console.log(
-              'the available createEngine function failed. Creating the default engine instead',
+              "the available createEngine function failed. Creating the default engine instead",
             )
             return createDefaultEngine()
           }
@@ -2285,7 +2285,7 @@
         const engineOptions = window.engine.getCreationOptions?.()
         if (!engineOptions || engineOptions.audioEngine !== false) {
         }
-        if (!engine) throw 'engine should not be null.'
+        if (!engine) throw "engine should not be null."
         startRenderLoop(engine, canvas)
         window.scene = createScene()
       }
@@ -2296,7 +2296,7 @@
       })
 
       // Resize
-      window.addEventListener('resize', function () {
+      window.addEventListener("resize", function () {
         engine.resize()
       })
     </script>

@@ -274,7 +274,6 @@ export function moveAnimation(
   step = 0.5,
   start = 0,
 ) {
-  
   return {
     mesh,
     animation: moveAni("position", createKeyframes(pathList, step, start)),

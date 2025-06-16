@@ -3,9 +3,8 @@ import { scene, engine } from "./initScene"
 import HavokPhysics from "@babylonjs/havok"
 import { ref } from "vue"
 
-
 export const config = {
-  frameRate:30,
+  frameRate: 30,
   showFps: false,
   debugger: false,
   HavokPhysics: false,

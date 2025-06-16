@@ -12,15 +12,14 @@
 //   // }
 // }
 export const getAssetUrl = (path: string) => {
-  
   if (import.meta.env.DEV) {
     // 开发环境：动态加载
     const ipath = `../assets/${path}`
-    return new URL(ipath, import.meta.url).href;
+    return new URL(ipath, import.meta.url).href
   } else {
     // 生产环境：通过 glob 预加载的静态路径
-    const assets = import.meta.glob('../assets/**/*', { eager: true, as: 'url' });
-    const key = `../assets/${path}`;
-    return assets[key] || `/assets/${path}`; // 回退到原始路径
+    const assets = import.meta.glob("../assets/**/*", { eager: true, as: "url" })
+    const key = `../assets/${path}`
+    return assets[key] || `/assets/${path}` // 回退到原始路径
   }
-};
+}

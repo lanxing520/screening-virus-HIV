@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { readExcelFile } from '@/utils/readExcel.ts'
+import { readExcelFile } from "@/utils/readExcel.ts"
 
-const emit = defineEmits(['file-upload'])
+const emit = defineEmits(["file-upload"])
 const excelData = ref<any>({})
 const tabList = ref<string[]>([])
-const activeTab = ref('')
+const activeTab = ref("")
 const tableData = ref([])
 
 const handleFileUpload = async (event: any) => {
@@ -32,9 +32,9 @@ const handleFileUpload = async (event: any) => {
     tabList.value = Object.keys(excelData.value) as string[]
     activeTab.value = tabList.value[0]
     tableData.value = excelData.value[tabList.value[0]]
-    emit('file-upload', data[0])
+    emit("file-upload", data[0])
   } catch (error) {
-    console.error('解析Excel失败:', error)
+    console.error("解析Excel失败:", error)
     // alert('文件解析失败，请检查文件格式')
   }
 }

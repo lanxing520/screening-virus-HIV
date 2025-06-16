@@ -1,6 +1,5 @@
 // // FluidRenderer.vue //
 <script setup lang="ts">
-
 // import * as BABYLON from '@babylonjs/core';
 // import '@babylonjs/loaders';
 // import '@babylonjs/gui';
@@ -331,7 +330,7 @@
 </script>
 
 <template>
-<canvas ref="canvasRef" class="fluid-canvas"></canvas>
+  <canvas ref="canvasRef" class="fluid-canvas"></canvas>
 </template>
 
 <style scoped>

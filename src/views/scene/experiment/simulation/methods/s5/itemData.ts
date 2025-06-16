@@ -6,7 +6,7 @@ export const origin = { x: 4.3, y: 1.08, z: -2.2 }
 export const itemData5 = {
   kt: {
     name: "抗体",
-    fileName:'IgG抗体',
+    fileName: "IgG抗体",
     rotate: [0, 0, 0],
     position: [origin.x, origin.y, origin.z + 0.2],
     scaling: 1,

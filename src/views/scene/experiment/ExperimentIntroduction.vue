@@ -1,6 +1,6 @@
 <template>
   <div class="experiment-introduction">
-    <div class="exp-intro">{{ store?.experimentInfo?.['实验简介']?.[0]?.ExpArticlesText }}</div>
+    <div class="exp-intro">{{ store?.experimentInfo?.["实验简介"]?.[0]?.ExpArticlesText }}</div>
     <div class="bottom-pic-wrapper">
       <img src="@/assets/img/experiment/one/图片1.png" alt="" />
       <img src="@/assets/img/experiment/one/图片2.jpg" alt="" />
@@ -17,8 +17,7 @@
 </template>
 
 <script setup lang="ts">
-
-import { useExperimentStore } from '@/stores/experimentStore'
+import { useExperimentStore } from "@/stores/experimentStore"
 
 const store = useExperimentStore()
 
@@ -36,7 +35,7 @@ onMounted(() => {})
   .exp-intro {
     width: 70%;
     height: 40%;
-    background: no-repeat center url('@/assets/img/experiment/实验介绍1.png');
+    background: no-repeat center url("@/assets/img/experiment/实验介绍1.png");
     background-size: 100% 100%;
     margin: 2rem auto;
     padding: 3rem 1.5rem 1.5rem 1.5rem;
@@ -48,7 +47,7 @@ onMounted(() => {})
     justify-content: space-between;
     width: 70%;
     height: 55%;
-    background: no-repeat center url('@/assets/img/experiment/实验介绍2.png');
+    background: no-repeat center url("@/assets/img/experiment/实验介绍2.png");
     background-size: 100% 100%;
     padding: 3rem 1.5rem 1.5rem 1.5rem;
     img {

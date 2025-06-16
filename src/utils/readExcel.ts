@@ -1,4 +1,4 @@
-import * as XLSX from 'xlsx'
+import * as XLSX from "xlsx"
 
 /**
  * 读取Excel文件内容
@@ -12,7 +12,7 @@ export async function readExcelFile(file: File) {
     reader.onload = (e) => {
       try {
         const data = new Uint8Array(e?.target?.result as any)
-        const workbook = XLSX.read(data, { type: 'array' })
+        const workbook = XLSX.read(data, { type: "array" })
         // console.log(workbook)
         const dataObject = {} as any
         // 获取第一个工作表
