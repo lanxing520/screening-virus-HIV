@@ -105,7 +105,8 @@ export async function initScene(
 export async function loadLab() {
   if (!scene) return
   try {
-    const labRes = await BABYLON.ImportMeshAsync("/model/scene/lab.glb", scene)
+    const modelPath = `${import.meta.env.BASE_URL}/model/scene/lab.glb`
+    const labRes = await BABYLON.ImportMeshAsync(modelPath, scene)
 
     labRes.meshes.forEach((mesh) => {
       mesh.isPickable = false

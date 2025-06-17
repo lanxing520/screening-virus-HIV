@@ -22,7 +22,7 @@ export async function loadItems(itemData: DynamicObject) {
       const data = itemData[key]
 
       const fileName = data?.fileName ?? data.name
-      const url = `/model/item/${fileName}.glb`
+      const url = `${import.meta.env.BASE_URL}/model/item/${fileName}.glb`
       if (!scene) return
       try {
         // 加载模型
