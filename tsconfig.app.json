@@ -7,21 +7,22 @@
     "src/**/*.vue",
     "src/**/*.ts",
     "src/**/*.d.ts",
-    "src/**/*.tsx","shims-vue.d.ts"
-, "RainierDockingSDK.js"  ],
+    "src/**/*.tsx",
+    "shims-vue.d.ts"
+  ],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
-    "types": ["vite/client"],
+    "types": ["vite/client", "vue"],
     "baseUrl": ".",
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "es2017", // choose our ECMA/JavaScript version (all modern browsers support ES6 so it's your best bet)
-    "lib": [
-      // choose our default ECMA/libraries to import
-      "dom", // mandatory for all browser-based apps
-      "es2017" // mandatory for targeting ES6
-    ],
+    "target": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

@@ -7,15 +7,16 @@ import { viteStaticCopy } from "vite-plugin-static-copy"
 import AutoImport from "unplugin-auto-import/vite"
 import Components from "unplugin-vue-components/vite"
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers"
+import legacy from "@vitejs/plugin-legacy"
 
 // https://vite.dev/config/
 export default defineConfig({
   base: "/vlab_files/2024/webgl/rlmy/", // 必须与部署路径一致
-  // build: {
-  //   outDir: path.resolve(__dirname, "../build/exp6-dist"), // 现在应该可以正常工作了
-  // },
   plugins: [
     vue(),
+    legacy({
+      targets: ["defaults", "not IE 11"],
+    }),
     vueDevTools(),
     viteStaticCopy({
       targets: [
