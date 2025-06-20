@@ -24,6 +24,7 @@ export default async () => {
     // 调试用
     scene?.debugLayer.show({
       overlay: true, // 显示覆盖层（包含 FPS）
+      embedMode: true,
     })
   }
   if (config.HavokPhysics) {

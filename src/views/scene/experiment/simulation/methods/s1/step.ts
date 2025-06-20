@@ -771,9 +771,9 @@ function startTubeAnimation() {
 }
 
 export async function jumpStep1() {
-  if (zxd) {
-    zxd.position = zxdOriginPosition
-  }
+  // if (zxd) {
+  //   zxd.position = zxdOriginPosition
+  // }
   resetItems(itemData1)
   if (stepManager) stepManager.goToStep()
 }
