@@ -38,7 +38,7 @@ export class AnimationStepManager {
   // 添加步骤
   addStep(step: AnimationStep) {
     this.steps.push(step)
-    const stepIndex = this.steps.length - 1
+    // const stepIndex = this.steps.length - 1
     this.stepScores.push({
       startTime: "",
       endTime: "",

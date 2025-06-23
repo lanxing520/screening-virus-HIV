@@ -1,7 +1,8 @@
-import * as BABYLON from "@babylonjs/core/Legacy/legacy"
+import { HavokPlugin, Vector3 } from "@babylonjs/core/Legacy/legacy"
 import { scene, engine } from "./initScene"
 import HavokPhysics from "@babylonjs/havok"
 import { ref } from "vue"
+import { watchPoint } from "../s4/itemData"
 
 export const config = {
   frameRate: 30,
@@ -9,6 +10,7 @@ export const config = {
   debugger: false,
   HavokPhysics: false,
   sceneOptimize: true,
+  watchPoint: [3.5,1.2,-3.3]
 }
 
 export const fps = ref<string>("")
@@ -29,8 +31,8 @@ export default async () => {
   }
   if (config.HavokPhysics) {
     const havokInstance = await HavokPhysics()
-    const hk = new BABYLON.HavokPlugin(true, havokInstance)
-    scene?.enablePhysics(new BABYLON.Vector3(0, -9.8, 0), hk)
+    const hk = new HavokPlugin(true, havokInstance)
+    scene?.enablePhysics(new Vector3(0, -9.8, 0), hk)
     // scene?.enablePhysics()
   }
   if (config.sceneOptimize) {
@@ -39,6 +41,6 @@ export default async () => {
     scene.blockMaterialDirtyMechanism = true
     scene.blockfreeActiveMeshesAndRenderingGroups = true
     //激进性能模式,会禁用鼠标事件
-    // scene.performancePriority = BABYLON.ScenePerformancePriority.Aggressive
+    // scene.performancePriority = ScenePerformancePriority.Aggressive
   }
 }

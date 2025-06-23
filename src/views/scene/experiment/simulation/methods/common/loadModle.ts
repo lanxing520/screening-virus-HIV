@@ -1,4 +1,5 @@
-import * as BABYLON from "@babylonjs/core/Legacy/legacy"
+import { ImportMeshAsync, Mesh } from "@babylonjs/core/Legacy/legacy"
+import type { ISceneLoaderAsyncResult } from "@babylonjs/core/Legacy/legacy"
 import { scene, camera } from "./initScene"
 import { addMouseOverInfo, move, rotate, scale, disposeMouseOverInfo, showMeshes } from "./action"
 
@@ -9,7 +10,7 @@ const PI = Math.PI
 export const origin = { x: 4.3, y: 1.1, z: -2.4 }
 
 type DynamicLoaderResult = {
-  [key: string]: BABYLON.ISceneLoaderAsyncResult // 任意字符串 key
+  [key: string]: ISceneLoaderAsyncResult // 任意字符串 key
 }
 
 export let item = {} as DynamicLoaderResult
@@ -26,7 +27,7 @@ export async function loadItems(itemData: DynamicObject) {
       if (!scene) return
       try {
         // 加载模型
-        const result = await BABYLON.ImportMeshAsync(url, scene, { name: data.name })
+        const result = await ImportMeshAsync(url, scene, { name: data.name })
 
         const rootMesh = result.meshes[0]
 
@@ -101,7 +102,7 @@ export function disposeAllModle() {
     // 清理 mesh
     result.meshes.forEach((mesh) => {
       mesh.dispose()
-      disposeMouseOverInfo(mesh as BABYLON.Mesh)
+      disposeMouseOverInfo(mesh as Mesh)
     })
     result.geometries.forEach((e) => {
       e.dispose()

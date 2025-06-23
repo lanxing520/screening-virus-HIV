@@ -156,7 +156,7 @@ export const itemData4 = {
   jyq: {
     name: "加样器",
     rotate: [0, 0, 0],
-    position: [origin.x, origin.y, origin.z - 0.33],
+    position: [origin.x + 0.15, origin.y, origin.z - 0.4],
     scaling: 0.8,
   },
   lxg: {

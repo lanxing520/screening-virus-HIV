@@ -1,30 +1,89 @@
 import { scene } from "./initScene"
-import * as BABYLON from "@babylonjs/core"
+import {
+  HighlightLayer,
+  Mesh,
+  Color3,
+  Scene,
+  PickingInfo,
+  ExecuteCodeAction,
+  ActionManager,
+  Vector3,
+  BoundingInfo,
+  StandardMaterial,
+  MeshBuilder,
+  ParticleSystem,
+  Texture,
+  Color4,
+  AbstractMesh,
+  SpriteManager,
+  Sprite,
+} from "@babylonjs/core"
 import { AudioPlayer } from "@/utils/audioPlayer"
 import { getAssetUrl } from "@/utils/assetHelper"
 import type { NumberArray } from "./interface"
 import { experimentScore } from "@/stores/experimentStore"
+
 const expInfo = experimentScore()
-let highlightLayer = null as null | BABYLON.HighlightLayer
-export function addHighlight(meshes: BABYLON.Mesh[]) {
+let highlightLayer = null as null | HighlightLayer
+
+let arrowSprite = null as null | Sprite
+
+const jumpSpeed = 0.001
+const maxJumpHeight = 0.05
+export function addHighlight(meshes: Mesh[]) {
   if (!scene) return
-  highlightLayer = new BABYLON.HighlightLayer("hl1", scene)
+  highlightLayer = new HighlightLayer("hl1", scene)
+  const arrList = [] as number[]
   // 点击时高亮
   meshes.forEach((e) => {
-    highlightLayer?.addMesh(e, new BABYLON.Color3(151 / 255, 1, 1))
+    highlightLayer?.addMesh(e, new Color3(151 / 255, 1, 1))
+    const boundingBox = e.getBoundingInfo().boundingBox
+    const height = boundingBox.maximumWorld.y - boundingBox.minimumWorld.y
+    arrList.push(height)
+  })
+  const maxHeight = Math.max(...arrList)
+  const p = meshes[0].getAbsolutePosition()
+  if (!arrowSprite) {
+    const spriteManager = new SpriteManager(
+      "arrowManager",
+      "arrow_down.png", // 替换为你的箭头图片路径
+      1, // 容量
+      64, // 单元格大小
+      scene,
+    )
+    arrowSprite = new Sprite("arrowSprite", spriteManager)
+    arrowSprite.size = 0.1 // 初始大小
+  }
+  // 跳动动画变量
+  arrowSprite.isVisible = true
+  // 在渲染循环中添加跳动效果
+  let jumpHeight = 0
+  let jumpDirection = 1
+  scene.registerBeforeRender(() => {
+    if (arrowSprite && arrowSprite.isVisible) {
+      // 更新跳动高度
+      jumpHeight += jumpSpeed * jumpDirection
+      // 改变方向当达到最高或最低点
+      if (jumpHeight > maxJumpHeight) {
+        jumpDirection = -1
+      } else if (jumpHeight < 0) {
+        jumpDirection = 1
+      }
+      arrowSprite.position.x = p.x
+      arrowSprite.position.y = p.y + maxHeight + jumpHeight + 0.1
+      arrowSprite.position.z = p.z
+    }
   })
 }
 export function removeHighlight() {
   highlightLayer?.removeAllMeshes()
+  if (arrowSprite) arrowSprite.isVisible = false
 }
 // 存储所有活动的点击处理器以便后续清理
 // 修改类型定义以匹配 BabylonJS 的 pointer down 回调签名
-const activeClickHandlers = new Map<
-  BABYLON.Scene,
-  (evt: any, pickResult: BABYLON.PickingInfo) => void
->()
+const activeClickHandlers = new Map<Scene, (evt: any, pickResult: PickingInfo) => void>()
 
-export function click(meshes: BABYLON.Mesh[], event: () => void, missEvent: () => void) {
+export function click(meshes: Mesh[], event: () => void, missEvent: () => void) {
   if (!scene) return
 
   // 先清理之前的处理器（如果存在）
@@ -33,10 +92,10 @@ export function click(meshes: BABYLON.Mesh[], event: () => void, missEvent: () =
     activeClickHandlers.delete(scene)
   }
 
-  const handler = (evt: any, pickResult: BABYLON.PickingInfo) => {
+  const handler = (evt: any, pickResult: PickingInfo) => {
     if (!pickResult.hit || !pickResult.pickedMesh) return
 
-    if (meshes.includes(pickResult.pickedMesh as BABYLON.Mesh)) {
+    if (meshes.includes(pickResult.pickedMesh as Mesh)) {
       expInfo.tipMessage = ""
       event()
       removeHighlight()
@@ -56,7 +115,23 @@ export function click(meshes: BABYLON.Mesh[], event: () => void, missEvent: () =
   scene.onPointerDown = handler
   activeClickHandlers.set(scene, handler)
 }
+export function addClickHelper(mesh: Mesh, sizeMultiplier = 2) {
+  // 创建不可见的辅助碰撞体
+  const helper = MeshBuilder.CreateSphere(
+    `${mesh.name}_H`,
+    { diameter: mesh.getBoundingInfo().boundingSphere.radius * sizeMultiplier },
+    scene,
+  )
 
+  helper.isVisible = false
+  helper.isPickable = true
+  helper.parent = mesh
+
+  // 将原始mesh设为不可点击
+  mesh.isPickable = false
+
+  return helper
+}
 // 添加全局清理方法
 export function disposeAllClickHandlers() {
   for (const [scene, _] of activeClickHandlers) {
@@ -76,15 +151,15 @@ export function addMouseOverInfo(mesh: any, meshName?: string) {
   mesh.name = meshName || mesh.name || "未命名Mesh"
 
   // 初始化ActionManager
-  mesh.actionManager = mesh.actionManager || new BABYLON.ActionManager(scene)
+  mesh.actionManager = mesh.actionManager || new ActionManager(scene)
 
   //高亮效果
 
   mesh.actionManager.registerAction(
-    new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, function () {
+    new ExecuteCodeAction(ActionManager.OnPointerOverTrigger, function () {
       if (!scene) return
       // 高亮效果
-      // hl.addMesh(mesh, new BABYLON.Color3(151 / 255, 1, 1))
+      // hl.addMesh(mesh, new Color3(151 / 255, 1, 1))
       // 显示信息
       showMeshInfo(mesh, scene.pointerX, scene.pointerY)
     }),
@@ -92,7 +167,7 @@ export function addMouseOverInfo(mesh: any, meshName?: string) {
 
   // 鼠标移出事件
   mesh.actionManager.registerAction(
-    new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, () => {
+    new ExecuteCodeAction(ActionManager.OnPointerOutTrigger, () => {
       // 隐藏信息
       hideMeshInfo()
     }),
@@ -121,7 +196,7 @@ export function addMouseOverInfo(mesh: any, meshName?: string) {
   }
 }
 
-export function disposeMouseOverInfo(mesh: BABYLON.Mesh) {
+export function disposeMouseOverInfo(mesh: Mesh) {
   if (mesh.actionManager) {
     mesh.actionManager.unregisterAction(mesh.actionManager.actions[0]) // 可更精细控制
     mesh.actionManager = null
@@ -130,30 +205,30 @@ export function disposeMouseOverInfo(mesh: BABYLON.Mesh) {
 
 export function move(mesh: any, position: NumberArray) {
   if (!mesh || position?.length < 3) return
-  mesh.position = new BABYLON.Vector3(...position)
+  mesh.position = new Vector3(...position)
 }
 export function rotate(mesh: any, rotation: NumberArray) {
   if (!mesh || !rotation || rotation?.length < 3) return
-  mesh.rotation = new BABYLON.Vector3(...rotation)
+  mesh.rotation = new Vector3(...rotation)
 }
 export function scale(mesh: any, scale: NumberArray | number) {
   if (Array.isArray(scale)) {
-    mesh.scaling = new BABYLON.Vector3(...scale)
+    mesh.scaling = new Vector3(...scale)
   } else if (typeof scale === "number") {
-    mesh.scaling = new BABYLON.Vector3(scale, scale, scale)
+    mesh.scaling = new Vector3(scale, scale, scale)
   }
 }
 export function posTranslate(position: NumberArray, translate: NumberArray): NumberArray {
   return [position[0] + translate[0], position[1] + translate[1], position[2] + translate[2]]
 }
-function addBoundingBox(mesh: BABYLON.Mesh) {
+function addBoundingBox(mesh: Mesh) {
   mesh.showBoundingBox = true
   let sphereMin = mesh.getBoundingInfo().boundingBox.minimum
   let sphereMax = mesh.getBoundingInfo().boundingBox.maximum
   console.log(sphereMin, sphereMax)
-  const min = new BABYLON.Vector3(sphereMin.x - 0.02, sphereMin.y - 0.02, sphereMin.z - 0.02) // 扩大最小边界
-  const max = new BABYLON.Vector3(sphereMax.x + 0.02, sphereMax.y + 0.02, sphereMax.z + 0.02) // 扩大最大边界
-  mesh.setBoundingInfo(new BABYLON.BoundingInfo(min, max))
+  const min = new Vector3(sphereMin.x - 0.02, sphereMin.y - 0.02, sphereMin.z - 0.02) // 扩大最小边界
+  const max = new Vector3(sphereMax.x + 0.02, sphereMax.y + 0.02, sphereMax.z + 0.02) // 扩大最大边界
+  mesh.setBoundingInfo(new BoundingInfo(min, max))
 }
 
 let animationId: number | null = null
@@ -201,13 +276,13 @@ function generateBlood(bottle: any) {
   const diameter = boundingBox.maximum.x - boundingBox.minimum.x
 
   // 创建液体材质
-  const liquidMaterial = new BABYLON.StandardMaterial("liquidMat", scene)
-  liquidMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0) // 红色
+  const liquidMaterial = new StandardMaterial("liquidMat", scene)
+  liquidMaterial.diffuseColor = new Color3(1, 0, 0) // 红色
   liquidMaterial.alpha = 0.8 // 半透明
 
   // 创建初始液面
   let liquidHeight = 0
-  const liquid = BABYLON.MeshBuilder.CreateCylinder(
+  const liquid = MeshBuilder.CreateCylinder(
     "liquid",
     {
       height: liquidHeight,
@@ -260,10 +335,10 @@ export function createLiquid(
   transformY = 0.05,
   color = [1, 0, 0],
   alpha = 1,
-): BABYLON.Mesh | undefined {
+): Mesh | undefined {
   if (!scene) return
   // 创建圆柱体作为液体
-  const liquid = BABYLON.MeshBuilder.CreateCylinder(
+  const liquid = MeshBuilder.CreateCylinder(
     "liquid",
     {
       height,
@@ -274,14 +349,14 @@ export function createLiquid(
   )
 
   // 将轴心点移动到圆柱体底部
-  liquid.setPivotPoint(new BABYLON.Vector3(0, -height / 2, 0))
+  liquid.setPivotPoint(new Vector3(0, -height / 2, 0))
   // 对齐到瓶子底部
   liquid.parent = bottle
   liquid.position.y = transformY // 调整Y轴位置
 
   // 设置半透明材质
-  const mat = new BABYLON.StandardMaterial("liquidMat", scene)
-  mat.diffuseColor = new BABYLON.Color3(...color) // 红色
+  const mat = new StandardMaterial("liquidMat", scene)
+  mat.diffuseColor = new Color3(...color) // 红色
   mat.alpha = alpha
   liquid.material = mat
 
@@ -304,20 +379,20 @@ export function createWaterFlow(
 ) {
   if (!scene) return
   // 创建粒子系统
-  const particleSystem = new BABYLON.ParticleSystem("particles", particleCount, scene)
+  const particleSystem = new ParticleSystem("particles", particleCount, scene)
 
   // 配置粒子属性
-  const p = new BABYLON.Vector3(...position)
+  const p = new Vector3(...position)
 
   //Texture of each particle
-  particleSystem.particleTexture = new BABYLON.Texture("/textures/flare.png", scene)
+  particleSystem.particleTexture = new Texture("/textures/flare.png", scene)
 
   // Where the particles come from
   particleSystem.emitter = p
   // Colors of all particles
-  particleSystem.color1 = new BABYLON.Color4(0.4, 1.5, 0.3, 1.0)
-  particleSystem.color2 = new BABYLON.Color4(0.4, 1.5, 0.3, 1.0)
-  particleSystem.colorDead = new BABYLON.Color4(0.4, 1.5, 0.3, 1.0)
+  particleSystem.color1 = new Color4(0.4, 1.5, 0.3, 1.0)
+  particleSystem.color2 = new Color4(0.4, 1.5, 0.3, 1.0)
+  particleSystem.colorDead = new Color4(0.4, 1.5, 0.3, 1.0)
   // Size of each particle (random between...
   particleSystem.minSize = 0.05
   particleSystem.maxSize = 0.06
@@ -330,7 +405,7 @@ export function createWaterFlow(
   particleSystem.emitRate = 500
 
   /******* Emission Space ********/
-  particleSystem.createPointEmitter(new BABYLON.Vector3(0, -1, 0), new BABYLON.Vector3(0, -1, 0))
+  particleSystem.createPointEmitter(new Vector3(0, -1, 0), new Vector3(0, -1, 0))
 
   // Speed
   particleSystem.minEmitPower = 1
@@ -339,7 +414,7 @@ export function createWaterFlow(
 
   const fluidRenderer = scene.enableFluidRenderer()
   fluidRenderer?.addParticleSystem(particleSystem)
-  if (fluidRenderer) fluidRenderer.targetRenderers[0].fluidColor = new BABYLON.Color3(...color)
+  if (fluidRenderer) fluidRenderer.targetRenderers[0].fluidColor = new Color3(...color)
 
   // Start the particle system
   particleSystem.start()
@@ -372,7 +447,7 @@ export function createWaterFlow(
 
   return particleSystem
 }
-export function showMeshes(meshes: BABYLON.AbstractMesh[] = [], state = true) {
+export function showMeshes(meshes: AbstractMesh[] = [], state = true) {
   meshes.forEach((e) => {
     e.setEnabled(state)
   })

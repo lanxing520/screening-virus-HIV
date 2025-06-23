@@ -18,7 +18,9 @@ import {
   changeSizeAni,
   moveAni,
   moveAnimation,
+  moveLid,
   rotateAni,
+  rotateAnimation,
   translateMove,
 } from "../common/animation"
 import { createBezierPath } from "../common/curvePath"
@@ -32,6 +34,7 @@ import {
   createLiquid,
   showMeshes,
   posTranslate,
+  addClickHelper,
 } from "../common/action"
 
 import { stepIndex } from "../common/stepManager"
@@ -104,7 +107,8 @@ export async function initStep1() {
   }
 
   const bottleCaps = item?.disinfectant?.meshes?.[2]
-  bottleCaps.setParent(null)
+  bottleCaps.rotation = new Vector3(0, 0, 0)
+  // bottleCaps.setParent(null)
   // 步骤1,棉签消毒
   stepManager.addStep({
     models: {
@@ -129,19 +133,8 @@ export async function initStep1() {
         },
         animations: [
           //移动消毒水瓶盖
-          {
-            mesh: bottleCaps,
-            animation: moveAni("position", [
-              {
-                frame: 0,
-                value: xds.position,
-              },
-              {
-                frame: 0.5 * frameRate,
-                value: [xds.position[0], xds.position[1] - 0.18, xds.position[2] - 0.1],
-              },
-            ]),
-          },
+          moveLid(bottleCaps, [0.1, +0.25, 0], 0, 3),
+          rotateAnimation(bottleCaps, "x", 3, 0, PI),
           //移动棉签
           {
             mesh: item.sterileSwab.meshes[0],
@@ -201,6 +194,7 @@ export async function initStep1() {
       },
     ],
     onEnter: async () => {
+      if (person) showMeshes(person.meshes)
       showMeshes(item.sterileSwab.meshes)
     },
   })
@@ -208,7 +202,9 @@ export async function initStep1() {
   // 定义步骤2,扎针
   stepManager.addStep({
     models: {},
-    onEnter: async () => {},
+    onEnter: async () => {
+      if (person) showMeshes(person.meshes)
+    },
     interactions: [
       {
         modelName: "bloodNeedle",
@@ -261,7 +257,9 @@ export async function initStep1() {
   // 定义步骤3,血液流入真空管
   stepManager.addStep({
     models: {},
-    onEnter: async () => {},
+    onEnter: async () => {
+      if (person) showMeshes(person.meshes)
+    },
     interactions: [
       {
         modelName: "bloodTube",
@@ -280,7 +278,9 @@ export async function initStep1() {
   // 定义步骤4,松止血带
   stepManager.addStep({
     models: models.step4,
-    onEnter: async () => {},
+    onEnter: async () => {
+      if (person) showMeshes(person.meshes)
+    },
     interactions: [
       {
         modelName: "zxd",
@@ -329,7 +329,9 @@ export async function initStep1() {
   // 定义步骤5,拔针
   stepManager.addStep({
     models: models.step4,
-    onEnter: async () => {},
+    onEnter: async () => {
+      if (person) showMeshes(person.meshes)
+    },
     interactions: [
       {
         modelName: "mq2",
@@ -389,7 +391,9 @@ export async function initStep1() {
         ],
       },
     ],
-    onExit: async () => {},
+    onExit: async () => {
+      if (person) showMeshes(person.meshes, false)
+    },
   })
 
   // 定义步骤6,标记
@@ -401,6 +405,7 @@ export async function initStep1() {
       },
     },
     onEnter: async () => {
+      if (person) showMeshes(person.meshes, false)
       playAudio(7)
     },
     interactions: [
@@ -482,6 +487,7 @@ export async function initStep1() {
       },
     },
     onEnter: async () => {
+      if (person) showMeshes(person.meshes, false)
       playAudio(8)
       showNeedle()
     },
@@ -518,6 +524,7 @@ export async function initStep1() {
       },
     },
     onEnter: async () => {
+      if (person) showMeshes(person.meshes, false)
       playAudio(9)
       item.bloodTube.meshes[0].rotation = new Vector3(0, 0, 0)
       // 重置变换
@@ -581,6 +588,8 @@ export async function initStep1() {
       },
     },
     onEnter: async () => {
+      camera?.focusOn(itemData1.jtdg.position, { alpha: 2 ,radius:3})
+      if (person) showMeshes(person.meshes, false)
       item.bloodTube.meshes[0].rotation = new Vector3(0, 0, 0)
       bxm.rotation = Vector3.Zero()
       item.bloodTube.meshes[2].isVisible = false
@@ -649,6 +658,7 @@ export async function initStep1() {
       },
     ],
     onExit: async () => {
+      camera?.resetCamera()
       item.bloodTube.meshes[2].isVisible = true
     },
   })

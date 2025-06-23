@@ -42,6 +42,7 @@ export const questionStore = defineStore("expQuestion", () => {
   ): Promise<PromiseType> => {
     myUntilTrue = untilTrue
     mySelect.value = []
+    showTips.value = false
     return new Promise((resolve) => {
       myQuestionData.value = expQuestionData[exp][step]
       dialogVisible.value = true

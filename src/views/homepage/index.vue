@@ -22,6 +22,7 @@ const store = useExperimentStore()
 const router = useRouter()
 
 const enter = () => {
+  store.activeTabIndex = 0
   router.push("/experiment-page")
 }
 

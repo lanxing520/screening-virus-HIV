@@ -469,18 +469,6 @@ export async function initStep5() {
                 frame: 1 * frameRate,
                 value: posTranslate(itemData5.lsxby.position, [0, 0.1, 0]),
               },
-              //  {
-              //    frame: 3 * frameRate,
-              //    value: posTranslate(itemData5.lsxby.position, [0, 0.1, 0]),
-              //  },
-              //  {
-              //    frame: 4 * frameRate,
-              //    value: posTranslate(itemData5.lsg.position, [0, 0.3, 0]),
-              //  },
-              //  {
-              //    frame: 4.25 * frameRate,
-              //    value: itemData5.lsg.position,
-              //  },
             ]),
           },
         ],
