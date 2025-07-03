@@ -3,6 +3,7 @@ class AudioPlayer {
   private isPlaying: boolean = false
   private currentFilePath: string | null = null
   private static instances: AudioPlayer[] = []
+  private onEndedCallback: (() => void) | null = null // 新增：用于存储回调
 
   constructor() {
     AudioPlayer.instances.push(this)
@@ -22,8 +23,16 @@ class AudioPlayer {
     this.currentFilePath = filePath
 
     this.audio.onerror = (error) => {
+      this.isPlaying = false
       console.error("音频播放出错:", error)
       this.handleError(error)
+    }
+
+    this.audio.onended = () => {
+      this.isPlaying = false
+      if (this.onEndedCallback) {
+        this.onEndedCallback()
+      }
     }
   }
   /**
@@ -31,8 +40,7 @@ class AudioPlayer {
    * @param filePath - 可选，音频文件的URL或base64数据
    */
   play(filePath?: string): void {
-    console.log("开始播放音频:", filePath)
-
+    if (filePath === this.currentFilePath) return
     // 如果有传入新文件路径或当前没有加载音频
     if (filePath && filePath !== this.currentFilePath) {
       this.stop() // 停止当前播放
@@ -53,6 +61,7 @@ class AudioPlayer {
     this.audio
       .play()
       .then(() => {
+        console.log("开始播放音频:", filePath)
         this.isPlaying = true
       })
       .catch((error) => {
@@ -60,7 +69,13 @@ class AudioPlayer {
         this.handleError(error)
       })
   }
-
+  /**
+   * 设置音频播放结束时的回调
+   * @param callback - 回调函数
+   */
+  setOnEnded(callback: () => void): void {
+    this.onEndedCallback = callback
+  }
   /**
    * 暂停播放
    */

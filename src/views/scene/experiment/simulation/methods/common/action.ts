@@ -22,7 +22,7 @@ import { AudioPlayer } from "@/utils/audioPlayer"
 import { getAssetUrl } from "@/utils/assetHelper"
 import type { NumberArray } from "./interface"
 import { experimentScore } from "@/stores/experimentStore"
-
+import { getTexturesAssetsUrl } from "@/utils/getBabylonAssets.ts"
 const expInfo = experimentScore()
 let highlightLayer = null as null | HighlightLayer
 
@@ -46,7 +46,7 @@ export function addHighlight(meshes: Mesh[]) {
   if (!arrowSprite) {
     const spriteManager = new SpriteManager(
       "arrowManager",
-      "arrow_down.png", // 替换为你的箭头图片路径
+      getTexturesAssetsUrl("arrow_down.png"), // 替换为你的箭头图片路径
       1, // 容量
       64, // 单元格大小
       scene,
@@ -316,17 +316,26 @@ function generateBlood(bottle: any) {
 
 const audioPlayer = new AudioPlayer()
 // 在用户交互事件中加载和播放音频
-export async function playAudio(index: number) {
+let volume = 1
+export async function playAudio(index: number, onEndCallback?: () => void) {
   try {
     const url = getAssetUrl(`audio/${index}.mp3`)
-    audioPlayer.setVolume(1) // 设置为50%音量
+    if (onEndCallback) {
+      audioPlayer.setOnEnded(onEndCallback)
+    }
     audioPlayer.play(url)
+    audioPlayer.setVolume(volume)
   } catch (error) {
     console.error("音频播放错误", error)
   }
 }
-export function disposeAudio() {
-  audioPlayer.destroy()
+export function stopAudio() {
+  audioPlayer.stop()
+}
+
+export function switchAudioVolume(status: boolean) {
+  volume = status ? 1 : 0
+  audioPlayer.setVolume(volume)
 }
 export function createLiquid(
   bottle: any,

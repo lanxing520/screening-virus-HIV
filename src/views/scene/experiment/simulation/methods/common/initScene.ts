@@ -12,9 +12,9 @@ import {
 import { disposeAllModle } from "./loadModle"
 import { ref } from "vue"
 import applyConfig from "./config"
-import { disposeAllClickHandlers, disposeAudio } from "./action"
+import { disposeAllClickHandlers } from "./action"
 import { CreateCamera } from "./camera"
-
+import { getModelAssetsUrl } from "@/utils/getBabylonAssets.ts"
 export let scene: Scene | undefined
 export let engine: AbstractEngine | null
 export let camera: CreateCamera | null
@@ -97,9 +97,8 @@ export async function initScene(
 export async function loadLab() {
   if (!scene) return
   try {
-    const modelPath = `${import.meta.env.BASE_URL}/model/scene/lab.glb`
+    const modelPath = getModelAssetsUrl("scene/lab")
     const labRes = await ImportMeshAsync(modelPath, scene)
-
     labRes.meshes.forEach((mesh) => {
       mesh.isPickable = false
     })
@@ -136,7 +135,6 @@ export function dispose() {
   //销毁点击事件
   disposeAllClickHandlers()
   //销毁音频
-  disposeAudio()
 
   engine?.dispose()
   camera?.dispose()

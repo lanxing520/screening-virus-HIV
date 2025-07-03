@@ -2,7 +2,7 @@ import { ImportMeshAsync, Mesh } from "@babylonjs/core/Legacy/legacy"
 import type { ISceneLoaderAsyncResult } from "@babylonjs/core/Legacy/legacy"
 import { scene, camera } from "./initScene"
 import { addMouseOverInfo, move, rotate, scale, disposeMouseOverInfo, showMeshes } from "./action"
-
+import { getModelAssetsUrl } from "@/utils/getBabylonAssets.ts"
 import type { DynamicObject } from "../common/interface.ts"
 
 const PI = Math.PI
@@ -23,7 +23,7 @@ export async function loadItems(itemData: DynamicObject) {
       const data = itemData[key]
 
       const fileName = data?.fileName ?? data.name
-      const url = `${import.meta.env.BASE_URL}/model/item/${fileName}.glb`
+      const url = getModelAssetsUrl(`item/${fileName}`)
       if (!scene) return
       try {
         // 加载模型
