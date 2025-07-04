@@ -36,7 +36,7 @@ import {
   posTranslate,
   addClickHelper,
 } from "../common/action"
-
+import { getModelAssetsUrl } from "@/utils/getBabylonAssets.ts"
 import { stepIndex } from "../common/stepManager"
 import { config } from "../common/config"
 import type { NumberArray } from "../common/interface"
@@ -50,10 +50,9 @@ let anim: AnimationGroup | null = null
 async function loadTester() {
   if (!scene) return
   if (person) return
-
-  const stool = await ImportMeshAsync(`${import.meta.env.BASE_URL}/model/scene/凳子.glb`, scene)
+  const stool = await ImportMeshAsync(getModelAssetsUrl("scene/凳子"), scene)
   stool.meshes[0].position = new Vector3(3.3, 0.05, -3.5)
-  person = await ImportMeshAsync(`${import.meta.env.BASE_URL}/model/item/HIV测试者.glb`, scene)
+  person = await ImportMeshAsync(getModelAssetsUrl("item/HIV测试者"), scene)
   person.meshes[0].position = new Vector3(3.2, 0.28, -3.5)
   person.meshes[0].rotation = new Vector3(0, -PI / 2, 0)
   anim = person.animationGroups[0]
@@ -588,7 +587,7 @@ export async function initStep1() {
       },
     },
     onEnter: async () => {
-      camera?.focusOn(itemData1.jtdg.position, { alpha: 2 ,radius:3})
+      camera?.focusOn(itemData1.jtdg.position, { alpha: 2, radius: 3 })
       if (person) showMeshes(person.meshes, false)
       item.bloodTube.meshes[0].rotation = new Vector3(0, 0, 0)
       bxm.rotation = Vector3.Zero()
@@ -677,14 +676,9 @@ async function createMyNeedle() {
   const transparentMaterial = new StandardMaterial("transparentMat", scene)
   transparentMaterial.alpha = 0.2 // 设置透明度（0-1，0为完全透明，1为完全不透明）
   tube.material = transparentMaterial
-  const needle1Res = await ImportMeshAsync(
-    `${import.meta.env.BASE_URL}/model/item/一次性采血针1.glb`,
-    scene,
-  )
-  const needle2Res = await ImportMeshAsync(
-    `${import.meta.env.BASE_URL}/model/item/一次性采血针2.glb`,
-    scene,
-  )
+
+  const needle1Res = await ImportMeshAsync(getModelAssetsUrl("item/一次性采血针1"), scene)
+  const needle2Res = await ImportMeshAsync(getModelAssetsUrl("item/一次性采血针2"), scene)
   needle1 = needle1Res.meshes[0] //针尾插管
   needle2 = needle2Res.meshes[0] //针头插手
   needle1.setParent(tube, true, true)

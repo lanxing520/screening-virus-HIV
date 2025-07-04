@@ -97,8 +97,7 @@ export async function initScene(
 export async function loadLab() {
   if (!scene) return
   try {
-    const modelPath = getModelAssetsUrl("scene/lab")
-    const labRes = await ImportMeshAsync(modelPath, scene)
+    const labRes = await ImportMeshAsync(getModelAssetsUrl("scene/lab"), scene)
     labRes.meshes.forEach((mesh) => {
       mesh.isPickable = false
     })
