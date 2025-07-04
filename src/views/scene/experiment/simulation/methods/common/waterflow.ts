@@ -11,12 +11,13 @@ import {
 } from "@babylonjs/core"
 import { scene } from "./initScene"
 import type { NumberArray } from "./interface"
+import { getTexturesAssetsUrl } from "@/utils/getBabylonAssets.ts"
 export function createVerticalWaterStream(emitterPosition: NumberArray, duration = 1) {
   // 创建粒子系统用于模拟水流
   const waterParticles = new ParticleSystem("waterStream", 2000, scene as Scene)
 
   // 设置粒子纹理（水滴或液体贴图）
-  waterParticles.particleTexture = new Texture("textures/liquid.png", scene)
+  waterParticles.particleTexture = new Texture(getTexturesAssetsUrl("water.png"), scene)
 
   // 设置发射器为一个不可见的平面（用于控制发射方向）
   const emitter = MeshBuilder.CreateDisc(

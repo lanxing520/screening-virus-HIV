@@ -394,7 +394,7 @@ export function createWaterFlow(
   const p = new Vector3(...position)
 
   //Texture of each particle
-  particleSystem.particleTexture = new Texture("/textures/flare.png", scene)
+  particleSystem.particleTexture = new Texture(getTexturesAssetsUrl("water.png"), scene)
 
   // Where the particles come from
   particleSystem.emitter = p

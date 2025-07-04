@@ -147,7 +147,6 @@ export function dispose() {
   camera = null
   light = null
   window.removeEventListener("resize", resize)
-  location.reload()
 }
 
 const resize = () => {

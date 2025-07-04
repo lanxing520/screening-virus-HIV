@@ -11,7 +11,7 @@ import legacy from "@vitejs/plugin-legacy"
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/vlab_files/2024/webgl/rlmy/", // 必须与部署路径一致
+  base: "./", // 必须与部署路径一致
   plugins: [
     vue(),
     legacy({
