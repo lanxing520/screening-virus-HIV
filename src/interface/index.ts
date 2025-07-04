@@ -9,3 +9,11 @@ export type QuestionData = {
     img?: string
   }[]
 }
+
+export interface PdfTableData {
+  id?: string
+  question: string
+  answer: string | string[]
+  userAnswer: string | string[]
+  reduceScore: number
+}

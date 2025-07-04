@@ -25,6 +25,7 @@ const list = computed(() => {
 })
 
 const goTo = (i: number) => {
+  store.simulatiuonName = list.value[i]
   store.isSimulation = i
 }
 

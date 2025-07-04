@@ -27,12 +27,14 @@ export const questionStore = defineStore("expQuestion", () => {
       ],
     },
   ])
-  const showTips = ref(false)
   let resolvePromise: ((val: PromiseType) => void) | null = null
   let correctCallback: (() => void) | null = null
   let errorCallback: (() => void) | null = null
   const mySelect = ref<SelectVal>([])
   let myUntilTrue = false
+  const showTips = ref(false)
+  const answerQuestionReport = ref<any[]>([])
+  const nowId = ref("")
   const setQuestion = (
     exp: string,
     step: string,
@@ -41,10 +43,19 @@ export const questionStore = defineStore("expQuestion", () => {
     onError?: () => void,
   ): Promise<PromiseType> => {
     myUntilTrue = untilTrue
-    mySelect.value = []
     showTips.value = false
+    mySelect.value = []
     return new Promise((resolve) => {
-      myQuestionData.value = expQuestionData[exp][step]
+      const data = expQuestionData[exp][step]
+      myQuestionData.value = data
+      if (!answerQuestionReport.value.find((item) => item.id === exp + step)) {
+        nowId.value = exp + step
+        answerQuestionReport.value.push({
+          id: nowId.value,
+          data,
+        })
+      }
+
       dialogVisible.value = true
       resolvePromise = resolve // 存储resolve函数
       // 将回调存储到 store 中，供 submitAnswer 使用
@@ -54,15 +65,19 @@ export const questionStore = defineStore("expQuestion", () => {
   }
   // 用户提交答案
   const submitAnswer = () => {
+    const obj = answerQuestionReport.value.find((item) => item.id === nowId.value)
     const correctAnswer = myQuestionData.value.map((q) => q.answer)
     const userAnswer = mySelect.value
-    const isCorrect = arraysEqual(correctAnswer, userAnswer)
-    if (isCorrect) {
+    const boolean = arraysEqual(correctAnswer, userAnswer)
+    if (obj.userAnswer === undefined) {
+      obj.userAnswer = JSON.parse(JSON.stringify(mySelect.value))
+    }
+    if (boolean) {
       if (correctCallback) {
         correctCallback() // 执行正确回调
       }
       if (resolvePromise) {
-        resolvePromise({ value: userAnswer, isCorrect }) // 解析Promise
+        resolvePromise({ value: userAnswer, isCorrect: boolean }) // 解析Promise
         resolvePromise = null
       }
       dialogVisible.value = false
@@ -77,7 +92,7 @@ export const questionStore = defineStore("expQuestion", () => {
         errorCallback() // 执行错误回调
       }
       if (!myUntilTrue && resolvePromise) {
-        resolvePromise({ value: userAnswer, isCorrect }) // 解析Promise
+        resolvePromise({ value: userAnswer, isCorrect: boolean }) // 解析Promise
         resolvePromise = null
         dialogVisible.value = false
       }
@@ -90,5 +105,6 @@ export const questionStore = defineStore("expQuestion", () => {
     mySelect,
     setQuestion,
     submitAnswer,
+    answerQuestionReport,
   }
 })

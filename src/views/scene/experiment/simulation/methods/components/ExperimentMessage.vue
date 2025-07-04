@@ -27,8 +27,9 @@
   </div>
 
   <el-button class="end-button" v-if="isFinished" @click="endExperiment">结束并提交</el-button>
-  <el-dialog v-model="dialogVisible" title="" width="500" align-center>
-    <span style="font-size: 20px"> 你的成绩为{{ expInfo.totalScore }}</span>
+ <el-dialog v-model="dialogVisible" title="" width="70%" align-center>
+    <ExperimentReport :table-data="report" />
+
     <template #footer>
       <div class="dialog-footer">
         <el-button type="primary" @click="submitScore"> 关闭 </el-button>
@@ -41,9 +42,12 @@
 <script setup lang="ts">
 import { useExperimentStore, experimentScore } from "@/stores/experimentStore"
 import ExpQuestion from "./ExpQuestion.vue"
+import ExperimentReport from "@/components/ExperimentReport.vue"
+import { questionStore } from "@/stores/expQuestionStore"
 import { isFinished, warmTips } from "../common/stepManager"
+import { arraysEqual } from "@/utils/common-methods"
 import { upload } from "@/api/rainier.ts"
-
+import type { PdfTableData } from "@/interface/index"
 interface Step {
   index: null | number
   name: string
@@ -94,7 +98,38 @@ const endExperiment = () => {
 
   dialogVisible.value = true
 }
-
+const quesStore = questionStore()
+const report = computed(() => {
+  const report = [] as PdfTableData[]
+  const list = quesStore.answerQuestionReport
+  list.forEach((item) => {
+    item.data.forEach((e: { question: string; answer: string | string[] }, i: number) => {
+      report.push({
+        question: e.question,
+        answer: e.answer,
+        userAnswer: item.userAnswer[i],
+        reduceScore: 0,
+      })
+    })
+  })
+  report.forEach((item) => {
+    const reduceScore = Math.round(100 / report.length)
+    if (checkAnswer(item.userAnswer, item.answer)) {
+      item.reduceScore = 0
+    } else {
+      item.reduceScore = reduceScore
+    }
+  })
+  return report
+})
+const checkAnswer = (my: string | string[], answer: string | string[]) => {
+  if (typeof my === "string" && typeof answer === "string") {
+    return my === answer
+  }
+  if (Array.isArray(my) && Array.isArray(answer)) {
+    return arraysEqual(my, answer)
+  }
+}
 const stepClick = (i: number) => {
   if (active.value.index === i) return
   active.value.index = i

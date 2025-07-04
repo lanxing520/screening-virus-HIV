@@ -8,6 +8,7 @@ export const useExperimentStore = defineStore(
     const EnglishName = ref("Screening for Human Immunodeficiency Virus (HIV)")
     const experimentInfo = shallowRef<any>(defaultExperimentInfo)
     const activeTabIndex = ref(0)
+    const simulatiuonName = ref("")
     const isSimulation = ref<number | null>(null)
     function getStepList(arr: any) {
       const empty = [] as { name: string; desc: string }[]
@@ -30,6 +31,7 @@ export const useExperimentStore = defineStore(
     })
     return {
       name,
+      simulatiuonName,
       EnglishName,
       activeTabIndex,
       isSimulation,
@@ -39,7 +41,7 @@ export const useExperimentStore = defineStore(
   },
   {
     persist: {
-      pick: ["activeTabIndex", "isSimulation"],
+      pick: ["activeTabIndex", "isSimulation", "simulatiuonName"],
     },
   },
 )
@@ -47,10 +49,11 @@ export const experimentScore = defineStore("experimentScore", () => {
   const tipMessage = ref("")
   const totalScore = ref(0)
   const report = ref<any[]>([])
-
+  const operationReport = ref<any[]>([])
   return {
     tipMessage,
     totalScore,
     report,
+    operationReport,
   }
 })
