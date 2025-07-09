@@ -58,12 +58,12 @@ export const itemData5 = {
   lsxby: {
     name: "流式细胞仪",
     rotate: [0, PI, 0],
-    position: [origin.x, origin.y, origin.z - 2],
+    position: [origin.x, origin.y, origin.z - 1.7],
   },
   lxj: {
     name: "离心机",
     rotate: [0, PI / 2, 0],
-    position: [origin.x, origin.y, origin.z - 2.5],
+    position: [origin.x, origin.y, origin.z - 2.2],
   },
   yc: {
     name: "摇床",

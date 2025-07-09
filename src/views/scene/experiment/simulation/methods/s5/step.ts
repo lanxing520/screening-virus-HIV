@@ -1,6 +1,6 @@
 import { item, resetItems } from "../common/loadModle"
 import { itemData5 } from "./itemData"
-
+import { camera } from "../common/initScene"
 import { Vector3, Mesh } from "@babylonjs/core"
 
 import {
@@ -16,6 +16,7 @@ import { playAudio, posTranslate, createLiquid } from "../common/action"
 import { AnimationStepManager } from "../common/stepManager"
 import { config } from "../common/config"
 import { questionStore } from "@/stores/expQuestionStore"
+import { watchPoint } from "../s4/itemData"
 const stroe = questionStore()
 
 const frameRate = config.frameRate
@@ -33,6 +34,13 @@ async function setQuestion(index: number) {
       stepManager?.reduceStepScore(index)
     },
   )
+}
+function resetCamera() {
+  camera?.focusOn([4, 1.2, -3.3], {
+    alpha: PI,
+    beta: 1.2,
+    radius: 2,
+  })
 }
 export async function initStep5() {
   stepManager = new AnimationStepManager()
@@ -55,6 +63,7 @@ export async function initStep5() {
       {
         modelName: "jyq",
         onClick: async () => {
+          camera?.focusOn(posTranslate(itemData5.knqx.position, [0, 0.1, 0]), { radius: 1 })
           await setQuestion(1)
           playAudio(40)
         },
@@ -74,7 +83,7 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnd: async () => {},
   })
   // 定义步骤2,加入抗体
   stepManager.addStep({
@@ -88,7 +97,6 @@ export async function initStep5() {
         modelName: "jyq",
         onClick: async () => {
           await setQuestion(2)
-          playAudio(41)
         },
         animations: [
           {
@@ -135,7 +143,12 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(41)
+    },
+    onEnd: async () => {
+      resetCamera()
+    },
   })
 
   // 定义步骤3,避光孵育
@@ -149,7 +162,7 @@ export async function initStep5() {
       {
         modelName: "lbz",
         onClick: async () => {
-          playAudio(42)
+          camera?.focusOn(watchPoint, { alpha: 2.2 })
         },
         animations: [
           {
@@ -191,7 +204,12 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(42)
+    },
+    onEnd: async () => {
+      resetCamera()
+    },
   })
   // 定义步骤4,裂解红细胞
   stepManager.addStep({
@@ -203,9 +221,7 @@ export async function initStep5() {
     interactions: [
       {
         modelName: "hxbljy",
-        onClick: async () => {
-          playAudio(43)
-        },
+        onClick: async () => {},
         animations: [
           moveAnimation(
             item.jyq.meshes[0],
@@ -222,7 +238,9 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(43)
+    },
   })
   // 定义步骤5,离心洗涤
   stepManager.addStep({
@@ -234,9 +252,7 @@ export async function initStep5() {
     interactions: [
       {
         modelName: "lsg",
-        onClick: async () => {
-          playAudio(44)
-        },
+        onClick: async () => {},
         animations: [
           moveAnimation(
             item.lsg.meshes[0],
@@ -275,7 +291,9 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(44)
+    },
   })
   //定义步骤6,PBS洗涤
   stepManager.addStep({
@@ -283,9 +301,7 @@ export async function initStep5() {
     interactions: [
       {
         modelName: "pbs",
-        onClick: async () => {
-          playAudio(45)
-        },
+        onClick: async () => {},
         animations: [
           moveLid(item.pbs.meshes[2], [0, -0.14, -0.1]),
           moveLid(item.lsg.meshes[2], [0, -0.09, -0.05], 0, 1.5),
@@ -370,7 +386,9 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(45)
+    },
   })
 
   //定义步骤7,固定细胞
@@ -379,9 +397,7 @@ export async function initStep5() {
     interactions: [
       {
         modelName: "djjq",
-        onClick: async () => {
-          playAudio(46)
-        },
+        onClick: async () => {},
         animations: [
           moveLid(item.djjq.meshes[1], [0, -0.14, -0.1], 0, 3),
           moveLid(item.lsg.meshes[2], [0, -0.09, -0.1], 0, 3),
@@ -428,7 +444,9 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(46)
+    },
   })
   //定义步骤8,流式细胞仪准备
   stepManager.addStep({
@@ -451,7 +469,6 @@ export async function initStep5() {
         modelName: "lsg",
         onClick: async () => {
           await setQuestion(9)
-          playAudio(48)
         },
         animations: [
           {
@@ -474,7 +491,9 @@ export async function initStep5() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(48)
+    },
   })
 }
 

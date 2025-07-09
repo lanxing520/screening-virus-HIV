@@ -3,14 +3,14 @@ import { scene, engine } from "./initScene"
 import HavokPhysics from "@babylonjs/havok"
 import { ref } from "vue"
 import { watchPoint } from "../s4/itemData"
-
+import type { NumberArray } from "./interface"
 export const config = {
   frameRate: 30,
   showFps: false,
   debugger: false,
   HavokPhysics: false,
   sceneOptimize: true,
-  watchPoint: [3.5,1.2,-3.3]
+  watchPoint: [3.5, 1.2, -3.3] as NumberArray,
 }
 
 export const fps = ref<string>("")

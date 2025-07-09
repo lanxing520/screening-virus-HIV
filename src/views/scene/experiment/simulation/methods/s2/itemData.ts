@@ -96,21 +96,21 @@ export const itemData2 = {
 
   mby: {
     name: "酶标仪",
-    position: [origin.x - 0.1, origin.y + 0.02, origin.z - 1.5],
+    position: [origin.x - 0.1, origin.y + 0.02, origin.z - 1.4],
     rotate: [0, -PI / 2, 0],
     scaling: 8,
   },
 
   bx: {
     name: "冰箱",
-    position: [origin.x - 0.1, origin.y + 0.02, origin.z - 2],
-    scaling: [0.7, 0.7, 0.7],
+    position: [origin.x - 0.1, origin.y + 0.02, origin.z - 1.75],
+    scaling: [0.5, 0.5, 0.5],
     rotate: [0, -PI / 2, 0],
   },
   hwx: {
     name: "恒温箱",
-    position: [origin.x - 0.1, origin.y + 0.02, origin.z - 2.6],
-    scaling: [0.7, 0.7, 0.7],
+    position: [origin.x - 0.1, origin.y + 0.02, origin.z - 2.2],
+    scaling: [0.5, 0.5, 0.5],
     rotate: [0, -PI / 2, 0],
   },
 } as DynamicObject

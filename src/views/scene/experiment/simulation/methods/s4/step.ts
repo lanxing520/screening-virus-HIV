@@ -1,6 +1,6 @@
 import { item, resetItems } from "../common/loadModle"
 import { itemData4 } from "./itemData"
-
+import {  camera } from "../common/initScene"
 import { Vector3, Mesh, AnimationEvent, AbstractMesh } from "@babylonjs/core"
 import {
   moveAnimation,
@@ -42,6 +42,13 @@ async function setQuestion(index: number) {
     },
   )
 }
+function resetCamera() {
+  camera?.focusOn([4, 1.2, -3.3], {
+    alpha: PI,
+    beta: 1.2,
+    radius: 2,
+  })
+}
 export async function initStep4() {
   stepManager = new AnimationStepManager()
   // 注册模型
@@ -82,6 +89,7 @@ export async function initStep4() {
       {
         modelName: "zls",
         onClick: async () => {
+          camera?.focusOn(itemData4.jyq.position)
           await setQuestion(1)
           playAudio(22)
         },
@@ -108,6 +116,7 @@ export async function initStep4() {
       {
         modelName: "jyq",
         onClick: async () => {
+          camera?.focusOn(itemData4.sjh.position,{radius:1.7})
           await setQuestion(2)
         },
         animations: [
@@ -300,7 +309,11 @@ export async function initStep4() {
     interactions: [
       {
         modelName: "lxg",
-        onClick: async () => {},
+        onClick: async () => {
+          camera?.focusOn(watchPoint,{
+            alpha:2,radius:1.8
+          })
+        },
         animations: [
           {
             mesh: item.lxg.meshes[0],
@@ -347,6 +360,9 @@ export async function initStep4() {
     onEnter: async () => {
       item.zkcxg.meshes[2].isVisible = false
       playAudio(25)
+    },
+    onEnd: async () => {
+      resetCamera()
     },
   })
 

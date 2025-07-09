@@ -23,6 +23,8 @@ const router = useRouter()
 
 const enter = () => {
   store.activeTabIndex = 0
+  store.isSimulation = null
+  store.simulatiuonName = ""
   router.push("/experiment-page")
 }
 

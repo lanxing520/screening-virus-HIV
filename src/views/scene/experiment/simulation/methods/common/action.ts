@@ -22,7 +22,7 @@ import { AudioPlayer } from "@/utils/audioPlayer"
 import { getAssetUrl } from "@/utils/assetHelper"
 import type { NumberArray } from "./interface"
 import { experimentScore } from "@/stores/experimentStore"
-import { getTexturesAssetsUrl } from "@/utils/getBabylonAssets.ts"
+import { getTexturesAssetsUrl } from "@/utils/getBabylonAssets"
 const expInfo = experimentScore()
 let highlightLayer = null as null | HighlightLayer
 
@@ -43,17 +43,17 @@ export function addHighlight(meshes: Mesh[]) {
   })
   const maxHeight = Math.max(...arrList)
   const p = meshes[0].getAbsolutePosition()
-  if (!arrowSprite) {
-    const spriteManager = new SpriteManager(
-      "arrowManager",
-      getTexturesAssetsUrl("arrow_down.png"), // 替换为你的箭头图片路径
-      1, // 容量
-      64, // 单元格大小
-      scene,
-    )
-    arrowSprite = new Sprite("arrowSprite", spriteManager)
-    arrowSprite.size = 0.1 // 初始大小
-  }
+
+  const spriteManager = new SpriteManager(
+    "arrowManager",
+    getTexturesAssetsUrl("arrow_down.png"), // 替换为你的箭头图片路径
+    1, // 容量
+    64, // 单元格大小
+    scene,
+  )
+  arrowSprite = new Sprite("arrowSprite", spriteManager)
+  arrowSprite.size = 0.1 // 初始大小
+
   // 跳动动画变量
   arrowSprite.isVisible = true
   // 在渲染循环中添加跳动效果
@@ -75,10 +75,16 @@ export function addHighlight(meshes: Mesh[]) {
     }
   })
 }
+
 export function removeHighlight() {
   highlightLayer?.removeAllMeshes()
+  highlightLayer?.dispose()
+  highlightLayer = null
   if (arrowSprite) arrowSprite.isVisible = false
 }
+
+
+
 // 存储所有活动的点击处理器以便后续清理
 // 修改类型定义以匹配 BabylonJS 的 pointer down 回调签名
 const activeClickHandlers = new Map<Scene, (evt: any, pickResult: PickingInfo) => void>()

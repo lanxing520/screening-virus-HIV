@@ -9,6 +9,6 @@
     }
   ],
   "compilerOptions": {
-    "types": ["babylonjs", "anotherAwesomeDependency", "element-plus/global"]
+    "types": ["babylonjs", "element-plus/global"]
   }
 }

@@ -523,6 +523,7 @@ export async function initStep1() {
       },
     },
     onEnter: async () => {
+      camera?.focusOn(models.step6.bloodTube, { radius: 1.5,beta:1.2 })
       if (person) showMeshes(person.meshes, false)
       playAudio(9)
       item.bloodTube.meshes[0].rotation = new Vector3(0, 0, 0)

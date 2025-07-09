@@ -16,8 +16,7 @@ export default defineConfig({
     vue(),
     legacy({
       targets: ["defaults", "not IE 11"],
-      modernPolyfills: false, // 禁用现代 polyfills
-      renderLegacyChunks: true, // 强制只生成 legacy 文件
+      renderModernChunks: false,
     }),
     vueDevTools(),
     viteStaticCopy({

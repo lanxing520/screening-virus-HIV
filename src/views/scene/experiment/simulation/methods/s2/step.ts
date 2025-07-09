@@ -1,6 +1,6 @@
 import { item, resetItems } from "../common/loadModle"
 import { itemData2 } from "./itemData"
-
+import { camera } from "../common/initScene"
 import {
   Vector3,
   AbstractMesh,
@@ -30,7 +30,7 @@ import { AnimationStepManager } from "../common/stepManager"
 import { config } from "../common/config"
 import { questionStore } from "@/stores/expQuestionStore"
 const stroe = questionStore()
-const frameRate = config.frameRate
+const { frameRate, watchPoint } = config
 
 const PI = Math.PI
 
@@ -47,7 +47,13 @@ async function setQuestion(index: number) {
     },
   )
 }
-
+function resetCamera() {
+  camera?.focusOn([4, 1.2, -3.3], {
+    alpha: PI,
+    beta: 1.2,
+    radius: 2,
+  })
+}
 export async function initStep2() {
   const lxg2 = item.lxg.meshes[0].clone("离心管2", null)
   const lxg3 = item.lxg.meshes[0].clone("离心管3", null)
@@ -82,6 +88,7 @@ export async function initStep2() {
       {
         modelName: "lt",
         onClick: async () => {
+          camera?.focusOn(itemData2.lt.position)
           playAudio(11)
           await setQuestion(1)
         },
@@ -689,6 +696,7 @@ export async function initStep2() {
       {
         modelName: "fbm",
         onClick: async () => {
+          resetCamera()
           await setQuestion(6)
           playAudio(13)
         },
@@ -941,6 +949,7 @@ export async function initStep2() {
       {
         modelName: "jyq",
         onClick: async () => {
+          camera?.focusOn(itemData2.jyq.position)
           await setQuestion(8)
         },
         animations: [
@@ -1126,7 +1135,9 @@ export async function initStep2() {
     onEnter: async () => {
       playAudio(14)
     },
-    onExit: async () => {},
+    onEnd: async () => {
+      resetCamera()
+    },
   })
   // 定义步骤9,加入酶标物-2
   stepManager.addStep({

@@ -1,5 +1,6 @@
 import { item, resetItems } from "../common/loadModle"
 import { itemData3 } from "./itemData"
+import { camera } from "../common/initScene"
 import { Vector3, Mesh } from "@babylonjs/core"
 import { changeSizeAni, moveAni, rotateAni } from "../common/animation"
 import { playAudio, posTranslate, createLiquid } from "../common/action"
@@ -30,7 +31,7 @@ export async function initStep3() {
   Object.keys(itemData3).forEach((key) => {
     stepManager?.registerModel(key, item[key].meshes)
   })
-
+  camera?.focusOn(itemData3.jtdg.position, { radius: 1.5 })
   // const blood = createLiquid(item.jtdg.meshes[0], 0.08, 0.003, 0.05) as Mesh
   // 定义步骤1,加样
   stepManager.addStep({
