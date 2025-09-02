@@ -2,7 +2,7 @@ import { item, resetItems } from "../common/loadModle"
 import { itemData3 } from "./itemData"
 import { camera } from "../common/initScene"
 import { Vector3, Mesh } from "@babylonjs/core"
-import { changeSizeAni, moveAni, rotateAni } from "../common/animation"
+import { changeSizeAni, moveAni, rotateAnimation } from "../common/animation"
 import { playAudio, posTranslate, createLiquid } from "../common/action"
 import { AnimationStepManager } from "../common/stepManager"
 import { config } from "../common/config"
@@ -107,6 +107,7 @@ export async function initStep3() {
     onEnter: async () => {},
   })
   // 定义步骤2
+  item.ybxsy.meshes[3].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {},
     interactions: [
@@ -116,6 +117,7 @@ export async function initStep3() {
           playAudio(12)
         },
         animations: [
+          rotateAnimation(item.ybxsy.meshes[3], "x", 1, 0, PI),
           {
             mesh: item.ybxsy.meshes[3],
             animation: moveAni("position", [

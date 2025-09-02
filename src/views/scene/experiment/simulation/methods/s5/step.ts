@@ -7,6 +7,7 @@ import {
   moveAnimation,
   moveAni,
   rotateAni,
+  rotateAnimation,
   createKeyframes,
   moveLid,
   createPositionKey,
@@ -53,6 +54,8 @@ export async function initStep5() {
   item.lxj.meshes[1].rotation = Vector3.Zero()
   // const blood = createLiquid(item.jtdg.meshes[0], 0.08, 0.003, 0.05) as Mesh
   // 定义步骤1,分装全血
+  item.lsg.meshes[2].rotation = Vector3.Zero()
+  item.knqx.meshes[2].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {
       jyq: {
@@ -78,8 +81,10 @@ export async function initStep5() {
             ],
             0.5,
           ),
-          moveLid(item.lsg.meshes[2], [0, -0.09, -0.1], 0, 3),
-          moveLid(item.knqx.meshes[2], [0, -0.09, -0.1], 0, 3),
+          rotateAnimation(item.lsg.meshes[2], "x", 0.5, 0, -PI),
+          rotateAnimation(item.knqx.meshes[2], "x", 0.5, 0, -PI),
+          moveLid(item.lsg.meshes[2], [0, 0.15, -0.05], 0, 3),
+          moveLid(item.knqx.meshes[2], [0, 0.15, -0.05], 0, 3),
         ],
       },
     ],
@@ -139,7 +144,8 @@ export async function initStep5() {
               { frame: 3.5 * frameRate, value: itemData5.jyq.position },
             ]),
           },
-          moveLid(item.lsg.meshes[2], [0, -0.09, -0.1], 1, 2),
+          rotateAnimation(item.lsg.meshes[2], "x", 0.5, 1, -PI),
+          moveLid(item.lsg.meshes[2], [0, 0.15, -0.05], 1, 2),
         ],
       },
     ],
@@ -212,6 +218,7 @@ export async function initStep5() {
     },
   })
   // 定义步骤4,裂解红细胞
+  item.hxbljy.meshes[1].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {
       jyq: {
@@ -233,8 +240,10 @@ export async function initStep5() {
             ],
             0.5,
           ),
-          moveLid(item.lsg.meshes[2], [0, -0.09, -0.05], 0, 3),
-          moveLid(item.hxbljy.meshes[1], [0, -0.09, -0.05], 0, 3),
+          rotateAnimation(item.lsg.meshes[2], "x", 1.5, 0, -PI),
+          moveLid(item.lsg.meshes[2], [0, 0.15, -0.05], 0, 3),
+          rotateAnimation(item.hxbljy.meshes[1], "x", 1.5, 0, -PI),
+          moveLid(item.hxbljy.meshes[1], [0, 0.15, -0.05], 0, 3),
         ],
       },
     ],
@@ -278,7 +287,8 @@ export async function initStep5() {
             1,
             5,
           ),
-          moveLid(item.lsg.meshes[2], [0, 0, 0.1], 5, 3),
+          rotateAnimation(item.lsg.meshes[2], "x", 1.5, 5, -PI),
+          moveLid(item.lsg.meshes[2], [0, 0.15, 0.05], 5, 3),
           {
             mesh: item.lxj.meshes[1],
             animation: rotateAni("rotation.x", [
@@ -296,6 +306,7 @@ export async function initStep5() {
     },
   })
   //定义步骤6,PBS洗涤
+  item.pbs.meshes[2].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {},
     interactions: [
@@ -303,8 +314,10 @@ export async function initStep5() {
         modelName: "pbs",
         onClick: async () => {},
         animations: [
-          moveLid(item.pbs.meshes[2], [0, -0.14, -0.1]),
-          moveLid(item.lsg.meshes[2], [0, -0.09, -0.05], 0, 1.5),
+          rotateAnimation(item.pbs.meshes[2], "x", 1.5, 0, -PI),
+          moveLid(item.pbs.meshes[2], [0, 0.2, -0.05]),
+          rotateAnimation(item.lsg.meshes[2], "x", 1.5, 0, -PI),
+          moveLid(item.lsg.meshes[2], [0, 0.12, -0.05], 0, 1.5),
           {
             mesh: item.jyq.meshes[0],
             animation: moveAni("position", [
@@ -392,6 +405,7 @@ export async function initStep5() {
   })
 
   //定义步骤7,固定细胞
+  item.djjq.meshes[1].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {},
     interactions: [
@@ -399,8 +413,10 @@ export async function initStep5() {
         modelName: "djjq",
         onClick: async () => {},
         animations: [
-          moveLid(item.djjq.meshes[1], [0, -0.14, -0.1], 0, 3),
-          moveLid(item.lsg.meshes[2], [0, -0.09, -0.1], 0, 3),
+          rotateAnimation(item.djjq.meshes[1], "x", 1.5, 0, -PI),
+          moveLid(item.djjq.meshes[1], [0, 0.2, -0.05], 0, 3),
+          rotateAnimation(item.lsg.meshes[2], "x", 1.5, 0, -PI),
+          moveLid(item.lsg.meshes[2], [0, 0.15, -0.05], 0, 3),
           {
             mesh: item.jyq.meshes[0],
             animation: moveAni("position", [

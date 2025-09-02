@@ -13,7 +13,7 @@ import {
   changeSizeAni,
   moveAni,
   rotateAni,
-  customRotate,
+  customRotate,rotateAnimation
 } from "../common/animation"
 import { ref, watch } from "vue"
 import {
@@ -136,6 +136,7 @@ export async function initStep2() {
     onEnter: async () => {},
   })
   // 定义步骤2
+  item.xdy.meshes[3].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {
       jyq: {
@@ -211,6 +212,7 @@ export async function initStep2() {
               },
             ]),
           },
+          rotateAnimation(item.xdy.meshes[3], "x", 0.75, 0, PI),
           {
             mesh: item.lxg.meshes[0],
             animation: moveAni("position", [
@@ -229,6 +231,7 @@ export async function initStep2() {
     onExit: async () => {},
   })
   // 定义步骤3
+  item.ybxsy.meshes[3].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {
       jyq: {
@@ -302,6 +305,7 @@ export async function initStep2() {
               { frame: 5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.ybxsy.meshes[3], "x", 1, 0, PI),
           {
             mesh: item.ybxsy.meshes[3],
             animation: moveAni("position", [
@@ -344,6 +348,7 @@ export async function initStep2() {
     onExit: async () => {},
   })
   // 定义步骤4
+  item.mbek.meshes[1].rotation = Vector3.Zero()
   stepManager.addStep({
     models: {
       lt: {
@@ -384,6 +389,7 @@ export async function initStep2() {
               },
             ]),
           },
+          rotateAnimation(item.ybxsy.meshes[3], "x", 1.5, 0, PI),
           {
             mesh: item.ybxsy.meshes[0],
             animation: moveAni("position", [
@@ -475,6 +481,7 @@ export async function initStep2() {
               { frame: 7.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.mbek.meshes[1], "x", 1, 5, PI),
           {
             mesh: item.mbek.meshes[1],
             animation: moveAni("position", [
@@ -524,7 +531,7 @@ export async function initStep2() {
       {
         modelName: "jyq",
         onClick: async () => {
-          playAudio(12)
+          
         },
         animations: [
           {
@@ -679,7 +686,9 @@ export async function initStep2() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+      playAudio(12)
+    },
   })
 
   // 定义步骤6,震荡孵育
@@ -698,7 +707,7 @@ export async function initStep2() {
         onClick: async () => {
           resetCamera()
           await setQuestion(6)
-          playAudio(13)
+         
         },
         animations: [
           {
@@ -799,7 +808,9 @@ export async function initStep2() {
         ],
       },
     ],
-    onEnter: async () => {},
+    onEnter: async () => {
+       playAudio(13)
+    },
   })
   // 定义步骤7
   stepManager.addStep({
@@ -875,6 +886,7 @@ export async function initStep2() {
               { frame: 5.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.xdy.meshes[3], "x", 1, 0, PI),
           {
             mesh: item.xdy.meshes[3],
             animation: moveAni("position", [
@@ -1012,6 +1024,7 @@ export async function initStep2() {
               { frame: 5.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.mbek.meshes[1], "x", 1, 0, PI),
           {
             mesh: item.mbek.meshes[1],
             animation: moveAni("position", [
@@ -1213,6 +1226,7 @@ export async function initStep2() {
               { frame: 5.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.xdy.meshes[3], "x", 1, 0, PI),
           {
             mesh: item.xdy.meshes[3],
             animation: moveAni("position", [
@@ -1274,6 +1288,7 @@ export async function initStep2() {
   })
 
   // 定义步骤10,加入底物显色剂A
+  item.xsjA.meshes[1].rotation=Vector3.Zero()
   stepManager.addStep({
     models: {
       mbbbb: {
@@ -1349,6 +1364,7 @@ export async function initStep2() {
               { frame: 5.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.xsjA.meshes[1], "x", 1, 0, PI),
           {
             mesh: item.xsjA.meshes[1],
             animation: moveAni("position", [
@@ -1384,6 +1400,7 @@ export async function initStep2() {
     onExit: async () => {},
   })
   //定义步骤11,加入底物显色剂B
+  item.xsjB.meshes[2].rotation=Vector3.Zero()
   stepManager.addStep({
     models: {
       mbbbb: {
@@ -1454,6 +1471,7 @@ export async function initStep2() {
               { frame: 5.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.xsjB.meshes[2], "x", 1, 0, PI),
           {
             mesh: item.xsjB.meshes[2],
             animation: moveAni("position", [
@@ -1593,6 +1611,7 @@ export async function initStep2() {
   })
 
   // 定义步骤13,终止反应
+  item.zzy.meshes[3].rotation=Vector3.Zero()
   stepManager.addStep({
     models: {
       mbbbb: {
@@ -1666,6 +1685,7 @@ export async function initStep2() {
               { frame: 5.5 * frameRate, value: itemData2.jyq.position },
             ]),
           },
+          rotateAnimation(item.zzy.meshes[3], "x", 1, 0, PI),
           {
             mesh: item.zzy.meshes[3],
             animation: moveAni("position", [

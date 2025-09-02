@@ -7,6 +7,8 @@
     :show-close="false"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
+    modal-class="question-modal"
+    append-to-body
   >
     <div class="question-item" v-for="(item, i) in store.myQuestionData">
       <div class="question">{{ i + 1 }}. {{ item.question }}</div>
@@ -59,6 +61,7 @@ const sumbitAnswer = () => {
 </script>
 
 <style scoped lang="scss">
+
 .option-img {
   width: 5rem;
   height: 5rem;
