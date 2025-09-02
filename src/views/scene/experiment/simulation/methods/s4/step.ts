@@ -1,6 +1,6 @@
 import { item, resetItems } from "../common/loadModle"
 import { itemData4 } from "./itemData"
-import {  camera } from "../common/initScene"
+import { camera } from "../common/initScene"
 import { Vector3, Mesh, AnimationEvent, AbstractMesh } from "@babylonjs/core"
 import {
   moveAnimation,
@@ -116,7 +116,7 @@ export async function initStep4() {
       {
         modelName: "jyq",
         onClick: async () => {
-          camera?.focusOn(itemData4.sjh.position,{radius:1.7})
+          camera?.focusOn(itemData4.sjh.position, { radius: 1.7 })
           await setQuestion(2)
         },
         animations: [
@@ -302,6 +302,8 @@ export async function initStep4() {
   //步骤6,样本处理
   stepManager.addStep({
     models: {
+      hwsyg: { visible: true },
+      lxj: { visible: true },
       sc: {
         position: posTranslate(itemData4.blb.position, [0, 0.12, 0]),
       },
@@ -310,8 +312,9 @@ export async function initStep4() {
       {
         modelName: "lxg",
         onClick: async () => {
-          camera?.focusOn(watchPoint,{
-            alpha:2,radius:1.8
+          camera?.focusOn(watchPoint, {
+            alpha: 2,
+            radius: 1.8,
           })
         },
         animations: [
@@ -369,6 +372,7 @@ export async function initStep4() {
   //步骤7,装胶
   stepManager.addStep({
     models: {
+      dyc: { visible: true },
       sc: {
         position: posTranslate(itemData4.blb.position, [0, 0.12, 0]),
       },
@@ -814,10 +818,12 @@ export async function initStep4() {
   })
   //步骤14,连接电源
   stepManager.addStep({
-    models: {},
+    models: {
+      zmy: { visible: true },
+    },
     interactions: [
       {
-        modelName: "dyykg",
+        modelName: "zmy",
         onClick: async () => {},
         animations: [],
       },
@@ -829,6 +835,8 @@ export async function initStep4() {
   //步骤15,封闭
   stepManager.addStep({
     models: {
+      yc:{visible:true},
+      zmy: { visible: true },
       hcm: {
         position: posTranslate(itemData4.zmy.position, [0.05, 0.22, 0]),
       },
@@ -890,7 +898,7 @@ export async function initStep4() {
   commonStep("tznn", 36)
   //步骤22,终止反应
   stepManager.addStep({
-    models: model.state16,
+    models: model.state22,
     interactions: [
       {
         modelName: "nz",
@@ -1004,7 +1012,9 @@ export async function initStep4() {
   })
   //步骤25,结果判定
   stepManager.addStep({
-    models: {},
+    models: {
+      hxfgcxy: { visible: true },
+    },
     interactions: [
       {
         modelName: "hxfgcxy",
@@ -1020,7 +1030,7 @@ export async function initStep4() {
   })
   //步骤26,结果阴阳性分析
   stepManager.addStep({
-    models: {},
+    models: { hxfgcxy: { visible: true } },
     interactions: [
       {
         modelName: "hxfgcxy",
@@ -1123,7 +1133,8 @@ function commonStep(nameKey: string, audioIndex: number) {
             item.hcm.meshes[0],
             [
               posTranslate(itemData4.fbm3.position, [-0.1, 0.02, 0]),
-              posTranslate(itemData4.yc.position, [-0.1, 0.25, 0]),
+              posTranslate(itemData4.fbm3.position, [-0.1, 0.32, 0]),
+              posTranslate(itemData4.yc.position, [-0.1, 0.32, 0]),
               { pause: 2 },
               posTranslate(itemData4.fbm3.position, [-0.1, 0.02, 0]),
             ],
@@ -1133,6 +1144,7 @@ function commonStep(nameKey: string, audioIndex: number) {
             item.fbm3.meshes[0],
             [
               itemData4.fbm3.position,
+              posTranslate(itemData4.fbm3.position, [0, 0.3, 0]),
               posTranslate(itemData4.yc.position, [0, 0.3, 0]),
               { pause: 2 },
               itemData4.fbm3.position,

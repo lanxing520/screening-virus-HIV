@@ -269,29 +269,34 @@ export const itemData4 = {
     rotate: [0, PI / 2, 0],
     position: [origin.x - 0.3, origin.y, origin.z - 2.8],
     scaling: 0.5,
+    visible: false,
   },
   dyy: {
     name: "电泳仪",
     rotate: [0, PI / 2, 0],
     position: [origin.x - 0.3, origin.y, origin.z - 2.8],
     scaling: 0.5,
+    visible: false,
   },
   dyykg: {
     name: "电泳仪开关",
     rotate: [0, PI / 2, 0],
     position: [origin.x + 0.1, origin.y, origin.z - 2],
     scaling: 0.5,
+    visible: false,
   },
   zmy: {
     name: "转膜仪",
     rotate: [0, -PI / 2, 0],
     position: [origin.x - 0.9, origin.y + 0.1, origin.z - 3],
     scaling: 0.7,
+    visible: false,
   },
   lxj: {
     name: "离心机",
     rotate: [0, PI, 0],
     position: [origin.x - 1.5, origin.y, origin.z - 3],
+    visible: false,
   },
 
   wwt: {
@@ -300,34 +305,32 @@ export const itemData4 = {
     position: [origin.x + 0.12, origin.y, origin.z - 3.2],
     scaling: 10,
   },
-  bx: {
-    name: "冰箱",
-    position: [origin.x - 3.7, origin.y + 0.07, origin.z - 2.7],
-    scaling: [0.7, 0.7, 0.7],
-    rotate: [0, 0, 0],
-  },
   yc: {
     name: "摇床",
-    rotate: [0, PI, 0],
-    position: [origin.x - 2.6, origin.y + 0.07, origin.z - 2.7],
+    rotate: [0, PI/2, 0],
+    position: [origin.x - 0.25, origin.y, origin.z - 2.5],
     scaling: 0.8,
+    visible: false,
   },
   hxfgcxy: {
     name: "化学发光成像仪",
-    rotate: [0, PI, 0],
-    position: [origin.x - 3.2, origin.y + 0.07, origin.z - 2.7],
+    rotate: [0, PI/2, 0],
+    position: [origin.x , origin.y, origin.z - 2.1],
+    visible: false,
   },
   hwsyg: {
     name: "恒温水浴锅",
     rotate: [0, 0, 0],
     position: [origin.x - 2, origin.y, origin.z - 2.7],
     scaling: 10,
+    visible: false,
   },
 } as DynamicObject
 
 // 初始位置
 export const model = {
   state8: {
+    dyc:{visible:true},
     zjj: {
       position: posTranslate(itemData4.dyc.position, [0, 0.05, 0]),
     },
@@ -335,10 +338,12 @@ export const model = {
       position: posTranslate(itemData4.dyc.position, [0, 0.05, 0]),
     },
     dyy: {
+      visible:true,
       position: posTranslate(itemData4.dyy.position, [-0.4, 0, 0]),
     },
   },
   state9: {
+    dyykg:{visible:true},dyc:{visible:true},dyy:{visible:true},
     zjj: {
       position: posTranslate(itemData4.dyc.position, [0, 0.05, 0]),
     },
@@ -347,6 +352,7 @@ export const model = {
     },
   },
   state12: {
+    zmy:{visible:true},
     lz: {
       position: posTranslate(itemData4.fbm2.position, [-0.06, 0.02, -0.065]),
       rotation: [PI / 2, PI / 2, 0] as NumberArray,
@@ -361,6 +367,7 @@ export const model = {
     },
   },
   state13: {
+    zmy:{visible:true},
     hmd: {
       visible: false,
       // position: posTranslate(watchPoint, [0.1, 0.01, 0]),
@@ -386,6 +393,15 @@ export const model = {
     },
   },
   state16: {
+    yc:{visible:true},
+    hcm: {
+      position: posTranslate(itemData4.fbm3.position, [-0.1, 0.02, 0]),
+    },
+    fbm3: {
+      visible: true,
+    },
+  },
+  state22:{
     hcm: {
       position: posTranslate(itemData4.fbm3.position, [-0.1, 0.02, 0]),
     },
@@ -394,6 +410,7 @@ export const model = {
     },
   },
   state23: {
+    hxfgcxy:{visible:true},
     hcm: {
       position: posTranslate(itemData4.fbm3.position, [-0.1, 0, 0]),
     },
